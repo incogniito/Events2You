@@ -1,4 +1,4 @@
-package com.example.samsonaiyegbusi.events2you;
+package com.example.samsonaiyegbusi.events2you.MainUI;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,7 +9,14 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class Homepage extends AppCompatActivity {
+import com.example.samsonaiyegbusi.events2you.Initialiser;
+import com.example.samsonaiyegbusi.events2you.R;
+import com.example.samsonaiyegbusi.events2you.SessionManager;
+
+public class Homepage extends AppCompatActivity implements Initialiser {
+
+    SessionManager mainSession;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,14 +25,8 @@ public class Homepage extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-       FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        variableInitialiser();
+
     }
 
     @Override
@@ -48,5 +49,24 @@ public class Homepage extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+
+    }
+
+    @Override
+    public void variableInitialiser() {
+
+        mainSession = new SessionManager(this);
+
+        mainSession.checkLogin();
+
+    }
+
+    @Override
+    public void widgetInitialiser() {
+
     }
 }

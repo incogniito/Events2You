@@ -11,10 +11,85 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_homepage"
-    tools:context="com.example.samsonaiyegbusi.events2you.Homepage">
+    tools:context=".MainUI.Homepage"
+    android:background="@mipmap/app_default_background">
 
-    <TextView
-        android:text="Hello World!"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ButtonsHolder"
+        android:weightSum="1"
+        android:layout_below="@+id/view"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/events_ib"
+            android:src="@mipmap/events_icon"
+            android:background="#00ffffff"
+            android:layout_gravity="bottom" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/calendar_ib"
+            android:src="@mipmap/calendar_icon"
+            android:background="#00ffffff" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/watch_list_ib"
+            android:src="@mipmap/watch_list_icon"
+            android:layout_gravity="bottom"
+            android:background="#00ffffff" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/update_ib"
+            android:src="@mipmap/updates_icon1"
+            android:background="#00ffffff"
+            android:layout_gravity="bottom" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout">
+
+        <ImageButton
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/search_ib"
+            android:src="@mipmap/search_icon"
+            android:background="#00ffffff" />
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/view"
+        android:layout_width="330dp"
+        android:layout_height="330dp"
+        android:layout_below="@+id/linearLayout"
+        android:layout_centerHorizontal="true">
+
+        <android.support.v4.view.PagerTitleStrip
+            android:id="@+id/pager_header"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:minHeight="?android:attr/listPreferredItemHeight"
+            android:layout_gravity="top"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:textColor="#fff" />
+    </android.support.v4.view.ViewPager>
 </RelativeLayout>
