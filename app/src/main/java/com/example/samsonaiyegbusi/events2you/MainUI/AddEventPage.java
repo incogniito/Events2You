@@ -1,5 +1,6 @@
 package com.example.samsonaiyegbusi.events2you.MainUI;
 
+import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
@@ -8,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
@@ -40,7 +42,6 @@ public class AddEventPage extends AppCompatActivity implements Initialiser {
     //TextView description;
     EditText event_date;
     EditText event_name;
-    EditText event_genre;
     EditText event_start_time;
     EditText event_finish_time;
 
@@ -59,9 +60,9 @@ public class AddEventPage extends AppCompatActivity implements Initialiser {
         setContentView(R.layout.activity_add_event_page);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        variableInitialiser();
 
         widgetInitialiser();
-        variableInitialiser();
 
 
     }
@@ -128,7 +129,7 @@ public class AddEventPage extends AppCompatActivity implements Initialiser {
                     public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
 
 
-                        event_date.setText( selectedday + "/" + selectedmonth + "/" + selectedyear);
+                        event_date.setText( selectedday + "-" + selectedmonth + "-" + selectedyear);
                     }
                 }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
                 eventDatePicker.setTitle("Select Date");
@@ -153,9 +154,6 @@ public class AddEventPage extends AppCompatActivity implements Initialiser {
                     break;
                 } else if (event_start_time.length() == 0) {
                     Toast.makeText(AddEventPage.this, "Please fill in Event date", Toast.LENGTH_SHORT).show();
-                    break;
-                } else if (event_genre.length() == 0) {
-                    Toast.makeText(AddEventPage.this, "Please fill in Event genre", Toast.LENGTH_SHORT).show();
                     break;
                 }
 
@@ -223,8 +221,6 @@ public class AddEventPage extends AppCompatActivity implements Initialiser {
 
             event_finish_time.setText(bundle.getString("Event_finish_time"));
 
-            // Create a column named "Genre" and insert the image
-            event_genre.setText(bundle.getString("Genre"));
 
             byte[] bytes = bundle.getByteArray("fileName");
 
@@ -261,6 +257,7 @@ public class AddEventPage extends AppCompatActivity implements Initialiser {
 
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -268,10 +265,13 @@ public class AddEventPage extends AppCompatActivity implements Initialiser {
         if (requestCode == image_loaded && resultCode == RESULT_OK && data != null) {
             if (count == 0) {
                 Uri selectedImage = data.getData();
+                uploadImage.setBackground(null);
                 uploadImage.setImageURI(selectedImage);
             } else if (count == 1){
                 Bitmap photo = (Bitmap) data.getExtras().get("data");
+                uploadImage.setBackground(null);
                 uploadImage.setImageBitmap(photo);
+
             }
         }
 

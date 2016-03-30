@@ -1,21 +1,34 @@
 package com.example.samsonaiyegbusi.events2you.MainUI;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.PagerTitleStrip;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.example.samsonaiyegbusi.events2you.Adapters.PagerAdapter;
 import com.example.samsonaiyegbusi.events2you.Initialiser;
 import com.example.samsonaiyegbusi.events2you.R;
+import com.example.samsonaiyegbusi.events2you.REST_calls.GetGenreList;
 import com.example.samsonaiyegbusi.events2you.SessionManager;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class Homepage extends AppCompatActivity implements Initialiser, AdapterView.OnItemClickListener {
 
@@ -26,6 +39,16 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
     private ArrayAdapter<String> menuAdapter;
 
     Bundle bundle;
+
+    ImageButton calendar_ib;
+    ImageButton events_ib;
+    ImageButton update_ib;
+    ImageButton watch_list_ib;
+    ImageButton search_ib;
+    Animation animateButton;
+    Animation animateSearchButton;
+    ViewPager viewPager;
+    List<String> genre;
 
 
     @Override
@@ -38,6 +61,7 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
         variableInitialiser();
         widgetInitialiser();
         addDrawerItems();
+        initialisePaging();
 
     }
 
@@ -85,6 +109,30 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
         menuDrawerList = (ListView)findViewById(R.id.navList);
         menuDrawerList.setOnItemClickListener(this);
 
+        calendar_ib = (ImageButton) findViewById(R.id.calendar_ib);
+        events_ib = (ImageButton) findViewById(R.id.events_ib);
+        update_ib = (ImageButton) findViewById(R.id.update_ib);
+        watch_list_ib = (ImageButton) findViewById(R.id.watch_list_ib);
+        search_ib = (ImageButton) findViewById(R.id.search_ib);
+
+        viewPager = (ViewPager) findViewById(R.id.view);
+
+        animateButton = AnimationUtils.loadAnimation(this, R.anim.abc_slide_in_bottom);
+        animateSearchButton = AnimationUtils.loadAnimation(this, R.anim.abc_popup_exit);
+
+
+        PagerTitleStrip title = (PagerTitleStrip) findViewById(R.id.pager_header);
+        title.setTextColor(Color.WHITE);
+
+
+        calendar_ib.setOnClickListener(this);
+        events_ib.setOnClickListener(this);
+        update_ib.setOnClickListener(this);
+        watch_list_ib.setOnClickListener(this);
+        search_ib.setOnClickListener(this);
+
+        bundle = new Bundle();
+
     }
 
     @Override
@@ -105,5 +153,21 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
 
         menuAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menu);
         menuDrawerList.setAdapter(menuAdapter);
+    }
+
+    private void initialisePaging() {
+
+        GetGenreList genreList = new GetGenreList(this);
+
+        try {
+            genre = genreList.execute(new String[]{}).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        final PagerAdapter pgrAdapter = new PagerAdapter(getSupportFragmentManager(), genre);
+        viewPager.setAdapter(pgrAdapter);
+
     }
 }

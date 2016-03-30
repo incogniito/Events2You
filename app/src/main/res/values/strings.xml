@@ -8,4 +8,8 @@
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_event_description_page">EventDescriptionPage</string>
     <string name="title_activity_preview_page">PreviewPage</string>
+    <string name="title_activity_chosen_event_page">ChosenEventPage</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:id="@+id/fragment_images_iv"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="false"
+        android:layout_centerVertical="true"
+         />
+
+    <View
+        android:id="@+id/textBackground_v"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignBottom="@+id/fragment_images_iv"
+        android:alpha="0.7"
+        android:background="#111" />
+    <TextView
+        android:id="@+id/Event_name_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_alignBottom="@+id/textBackground_v"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="Event Name"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/identifier"
+        android:layout_alignLeft="@+id/Event_name_tv"
+        android:layout_alignStart="@+id/Event_name_tv"
+        android:layout_alignTop="@+id/textBackground_v" />
+
+</RelativeLayout>

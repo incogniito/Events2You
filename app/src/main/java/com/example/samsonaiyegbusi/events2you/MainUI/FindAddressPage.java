@@ -87,6 +87,8 @@ public class FindAddressPage extends AppCompatActivity implements Initialiser, O
 
     @Override
     public void variableInitialiser() {
+        Intent intent = getIntent();
+        bundle = intent.getExtras();
          mapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.map_gm));
 
     }
@@ -129,6 +131,7 @@ public class FindAddressPage extends AppCompatActivity implements Initialiser, O
         String Postcode_getter = POSTCODE_et.getText().toString();
          addressMarker = null;
 
+
         Geocoder geoCoder = new Geocoder(this, Locale.getDefault());
         try {
             List<Address> addresses = geoCoder.getFromLocationName(
@@ -152,34 +155,19 @@ public class FindAddressPage extends AppCompatActivity implements Initialiser, O
                         if (country != null) {
                             if (state != null) {
                                 if (postalCode != null) {
-                                    if (addressMarker.getPosition() == null) {
                                         addressMarker = MAP_GM.addMarker(new MarkerOptions().position(ADDRESS).title(address + ", " + city + ", " + state + ", " + country + ", " + postalCode));
                                         addressMarker.showInfoWindow();
-                                    } else {
-                                        addressMarker.remove();
-                                        addressMarker.showInfoWindow();
-                                        addressMarker = MAP_GM.addMarker(new MarkerOptions().position(ADDRESS).title(address + ", " + city + ", " + state + ", " + country + ", " + postalCode));
-                                    }
+
                                 } else {
-                                    if (addressMarker.getPosition() == null) {
                                         addressMarker=  MAP_GM.addMarker(new MarkerOptions().position(ADDRESS).title(address + ", " + country));
                                         addressMarker.showInfoWindow();
-                                    }else {
-                                        addressMarker.remove();
-                                        addressMarker=  MAP_GM.addMarker(new MarkerOptions().position(ADDRESS).title(address + ", " + country));
-                                        addressMarker.showInfoWindow();
-                                    }
+
                                 }
                             } else {
                                 if (postalCode != null) {
-                                    if (addressMarker.getPosition() == null) {
                                         addressMarker=   MAP_GM.addMarker(new MarkerOptions().position(ADDRESS).title(address + ", " + city + ", " + "UK" + ", " + postalCode));
                                         addressMarker.showInfoWindow();
-                                    } else {
-                                        addressMarker.remove();
-                                        addressMarker=   MAP_GM.addMarker(new MarkerOptions().position(ADDRESS).title(address + ", " + city + ", " + "UK" + ", " + postalCode));
-                                        addressMarker.showInfoWindow();
-                                    }
+
                                 }
                             }
                         }
@@ -187,27 +175,17 @@ public class FindAddressPage extends AppCompatActivity implements Initialiser, O
                         if (country != null) {
                             if (state != null) {
                                 if (postalCode != null) {
-                                    if (addressMarker.getPosition() == null) {
                                         addressMarker=   MAP_GM.addMarker(new MarkerOptions().position(ADDRESS).title(address + ", " + state + ", " + country + ", " + postalCode));
                                         addressMarker.showInfoWindow();
-                                    }else {
-                                        addressMarker.remove();
-                                        addressMarker=   MAP_GM.addMarker(new MarkerOptions().position(ADDRESS).title(address + ", " + state + ", " + country + ", " + postalCode));
-                                        addressMarker.showInfoWindow();
-                                    }
+
                                 } else {
 
                                 }
                             } else {
                                 if (postalCode != null) {
-                                    if (addressMarker.getPosition() == null) {
                                         addressMarker=  MAP_GM.addMarker(new MarkerOptions().position(ADDRESS).title(address + ", " + country + ", " + postalCode));
                                         addressMarker.showInfoWindow();
-                                    }else {
-                                        addressMarker.remove();
-                                        addressMarker= MAP_GM.addMarker(new MarkerOptions().position(ADDRESS).title(address + ", " + country + ", " + postalCode));
-                                        addressMarker.showInfoWindow();
-                                    }
+
                                 } else {
 
                                 }

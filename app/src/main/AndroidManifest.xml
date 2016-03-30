@@ -64,6 +64,10 @@
         <activity
             android:name=".MainUI.PreviewPage"
             android:label="@string/title_activity_preview_page"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MainUI.ChosenEventPage"
+            android:label="@string/title_activity_chosen_event_page"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

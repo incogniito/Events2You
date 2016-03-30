@@ -74,7 +74,7 @@ public class PreviewPage extends AppCompatActivity implements Initialiser{
         Intent intent = getIntent();
         bundle = intent.getExtras();
 
-
+session = new SessionManager(this);
 
         retrieveImage();
         retrieveDetails();

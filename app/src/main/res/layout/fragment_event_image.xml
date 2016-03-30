@@ -1,0 +1,22 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.samsonaiyegbusi.events2you.Fragments.EventImageFragment">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/image_background">
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="400dp"
+            android:id="@+id/chosen_image_iv"
+            android:clickable="false"
+            android:layout_gravity="center"
+            android:background="#00ffffff" />
+    </LinearLayout>
+
+</RelativeLayout>
