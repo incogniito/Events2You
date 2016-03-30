@@ -44,6 +44,15 @@ public class SignupPage extends AppCompatActivity implements Initialiser {
         setContentView(R.layout.activity_signup_page);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+        View decorView = getWindow().getDecorView();
+
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+
+        getSupportActionBar().hide();
+
 variableInitialiser();
         widgetInitialiser();
 

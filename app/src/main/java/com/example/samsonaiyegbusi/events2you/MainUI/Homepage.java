@@ -1,5 +1,6 @@
 package com.example.samsonaiyegbusi.events2you.MainUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,14 +9,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.example.samsonaiyegbusi.events2you.Initialiser;
 import com.example.samsonaiyegbusi.events2you.R;
 import com.example.samsonaiyegbusi.events2you.SessionManager;
 
-public class Homepage extends AppCompatActivity implements Initialiser {
+public class Homepage extends AppCompatActivity implements Initialiser, AdapterView.OnItemClickListener {
 
     SessionManager mainSession;
+
+    String[] menu = {"Add Event", "Logout"};
+    private ListView menuDrawerList;
+    private ArrayAdapter<String> menuAdapter;
+
+    Bundle bundle;
 
 
     @Override
@@ -26,6 +36,8 @@ public class Homepage extends AppCompatActivity implements Initialiser {
         setSupportActionBar(toolbar);
 
         variableInitialiser();
+        widgetInitialiser();
+        addDrawerItems();
 
     }
 
@@ -59,6 +71,8 @@ public class Homepage extends AppCompatActivity implements Initialiser {
     @Override
     public void variableInitialiser() {
 
+        bundle = new Bundle();
+
         mainSession = new SessionManager(this);
 
         mainSession.checkLogin();
@@ -68,5 +82,28 @@ public class Homepage extends AppCompatActivity implements Initialiser {
     @Override
     public void widgetInitialiser() {
 
+        menuDrawerList = (ListView)findViewById(R.id.navList);
+        menuDrawerList.setOnItemClickListener(this);
+
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (menu[position].equalsIgnoreCase("Add Event")){
+
+            Intent addEventProcess = new Intent(Homepage.this, AddEventPage.class);
+            addEventProcess.putExtras(bundle);
+            startActivity(addEventProcess);
+
+        } else if (menu[position].equalsIgnoreCase("Logout"))
+        {
+            mainSession.logoutUser();
+        }
+    }
+
+    private void addDrawerItems() {
+
+        menuAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menu);
+        menuDrawerList.setAdapter(menuAdapter);
     }
 }

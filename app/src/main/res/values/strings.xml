@@ -3,4 +3,9 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_login_page">LoginPage</string>
     <string name="title_activity_signup_page">SignupPage</string>
+    <string name="title_activity_add_event_page">AddEventPage</string>
+    <string name="title_activity_find_address_page">FindAddressPage</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_event_description_page">EventDescriptionPage</string>
+    <string name="title_activity_preview_page">PreviewPage</string>
 </resources>

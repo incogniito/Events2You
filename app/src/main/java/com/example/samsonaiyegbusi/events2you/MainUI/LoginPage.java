@@ -39,6 +39,13 @@ public class LoginPage extends AppCompatActivity implements Initialiser {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        View decorView = getWindow().getDecorView();
+
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+
+        getSupportActionBar().hide();
+
         widgetInitialiser();
     }
 
