@@ -7,7 +7,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.samsonaiyegbusi.events2you.Fragments.ChosenEventInformationFragment;
 import com.example.samsonaiyegbusi.events2you.Fragments.EventImageFragment;
+import com.example.samsonaiyegbusi.events2you.SessionManager;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -21,6 +23,8 @@ public class ChosenEventFragmentPagerAdapter extends FragmentPagerAdapter {
 
     String event_ID;
     Context context;
+
+
 
     public ChosenEventFragmentPagerAdapter(FragmentManager fm, List<Fragment> fragments, String event_ID, byte[] bytes, Context context )
     {
@@ -38,10 +42,12 @@ public class ChosenEventFragmentPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
+
+
         switch (position)
         {
             case 0: return EventImageFragment.create(0, bytes);
-            case 1: return ChosenEventInformationFragment.create(1, event_ID, context);
+            case 1: return ChosenEventInformationFragment.create(1, event_ID, context, bytes);
 
             default:  return EventImageFragment.create(0, bytes);
         }

@@ -18,7 +18,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class HTTP_Methods {
 
-    String ip = "http://172.21.5.71:8080/Events2You_API/API";
+    String ip = "http://192.168.0.8:8080/Events2You_API/API";
 
     public String GET(String desiredUrl) {
         try {
@@ -27,7 +27,6 @@ public class HTTP_Methods {
 
             HttpURLConnection connect2Rest = (HttpURLConnection) url.openConnection();
 
-            InputStream in = connect2Rest.getInputStream();
 
             if (connect2Rest.getResponseCode() != 200) {
                 throw new IOException(connect2Rest.getResponseMessage());
@@ -46,7 +45,8 @@ public class HTTP_Methods {
 
         } catch (MalformedURLException e) {
             System.out.println("MalformedURLException: " + e);
-        } catch (IOException e) {System.out.println("IOException: " + e);
+        } catch (IOException e) {
+            System.out.println("IOException: " + e);
         }
 
         return null;

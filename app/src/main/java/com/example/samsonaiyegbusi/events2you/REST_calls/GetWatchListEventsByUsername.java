@@ -25,9 +25,10 @@ import java.util.List;
 /**
  * Created by samsonaiyegbusi on 13/03/16.
  */
-public class GetEventsByID extends AsyncTask<String, Void, EventsFactory> {
+public class GetWatchListEventsByUsername extends AsyncTask<String, Void, List<EventsFactory>> {
 
-    String url = "/events/findevent?id=";
+    String url = "/watchedevents/eventbyusername?username=";
+    List<EventsFactory> eventsList;
     EventsFactory events;
 
     String text;
@@ -35,7 +36,7 @@ public class GetEventsByID extends AsyncTask<String, Void, EventsFactory> {
     ProgressDialog progressDialog;
     Context context;
 
-    public GetEventsByID(Context context)
+    public GetWatchListEventsByUsername(Context context)
     {
         this.context = context;
     }
@@ -51,26 +52,28 @@ public class GetEventsByID extends AsyncTask<String, Void, EventsFactory> {
                 dialog.dismiss();
             }
         });
-        progressDialog.show();    }
+        progressDialog.show();
+    }
 
     @Override
-    protected EventsFactory doInBackground(String... params) {
+    protected List<EventsFactory> doInBackground(String... params) {
 
-        String id = params[0];
+        String username = params[0];
 
         HTTP_Methods http_methods = new HTTP_Methods();
-        String response = http_methods.GET(url + id);
+        String response = http_methods.GET(url + username);
 
         return parseXML(response);
 
     }
 
-    public  EventsFactory parseXML(String xml)
+    public  List<EventsFactory> parseXML(String xml)
     {
         XmlPullParserFactory factory;
 
         try {
             factory = XmlPullParserFactory.newInstance();
+            eventsList = new ArrayList();
 
             factory.setNamespaceAware(true);
             XmlPullParser parser = factory.newPullParser();
@@ -88,7 +91,7 @@ public class GetEventsByID extends AsyncTask<String, Void, EventsFactory> {
                 switch(eventType)
                 {
                     case XmlPullParser.START_TAG:
-                        if (tag.equalsIgnoreCase("events"))
+                        if (tag.equalsIgnoreCase("watchedevents"))
                         {
                             events = new EventsFactory();
                         }
@@ -110,66 +113,16 @@ public class GetEventsByID extends AsyncTask<String, Void, EventsFactory> {
                         } else if (tag.equalsIgnoreCase("eventName"))
                         {
                             events.setEventName(text);
-                        } else if (tag.equalsIgnoreCase("eventAddress"))
+                            eventsList.add(events);
+                        } else if (tag.equalsIgnoreCase("stringEventID"))
                         {
-                            events.setEventAddress(text);
-                        } else if (tag.equalsIgnoreCase("eventDescription"))
-                        {
-                            events.setEventDescription(text.trim());
-                        } else if (tag.equalsIgnoreCase("eventFinishTime"))
-                        {
-                            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-                            DateFormat tdf = new SimpleDateFormat("HH:mm");
-                            Date finishTime = null;
-                            try {
-                                finishTime = df.parse(text);
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-                            events.setEventFinishTime(tdf.format(finishTime));
-                        } else if (tag.equalsIgnoreCase("eventStartTime"))
-                        {
-                            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-                            DateFormat tdf = new SimpleDateFormat("HH:mm");
-                            Date startTime = null;
-                            try {
-                                startTime = df.parse(text);
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-                            events.setEventStartTime(tdf.format(startTime));
-                        }  else if (tag.equalsIgnoreCase("username"))
-                        {
-                            events.setEventUsername(text);
-                        } else if (tag.equalsIgnoreCase("eventDate"))
-                        {
-                            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-                            DateFormat newdf = new SimpleDateFormat("EEE, d MMM yyyy");
-
-                            Date date = null;
-                            try {
-                                date = df .parse(text);
-                                if (date == null)
-                                {
-                                }
-                            } catch (ParseException e) {
-
-                                try {
-                                    date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(text);
-                                } catch (ParseException e1) {
-                                    e1.printStackTrace();
-                                }
-
-                                e.printStackTrace();
-                            }
-
-                            events.setEventDate(newdf.format(date));
+                            events.setEventID(text);
                         }
                         break;
                 }
                 eventType = parser.next();
             }
-            return events;
+            return eventsList;
         } catch (XmlPullParserException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -179,7 +132,7 @@ public class GetEventsByID extends AsyncTask<String, Void, EventsFactory> {
     }
 
     @Override
-    protected void onPostExecute(EventsFactory strings) {
+    protected void onPostExecute(List<EventsFactory> strings) {
         progressDialog.dismiss();
         if (strings == null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);

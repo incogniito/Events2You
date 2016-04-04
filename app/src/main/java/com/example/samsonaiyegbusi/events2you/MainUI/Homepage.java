@@ -42,7 +42,6 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
 
     ImageButton calendar_ib;
     ImageButton events_ib;
-    ImageButton update_ib;
     ImageButton watch_list_ib;
     ImageButton search_ib;
     Animation animateButton;
@@ -89,6 +88,15 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
 
     @Override
     public void onClick(View v) {
+        v.startAnimation(animateButton);
+        switch (v.getId())
+        {
+            case R.id.watch_list_ib:
+
+                Intent takeusertoWatch = new Intent(Homepage.this, WatchList.class);
+                startActivity(takeusertoWatch);
+                break;
+        }
 
     }
 
@@ -111,7 +119,6 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
 
         calendar_ib = (ImageButton) findViewById(R.id.calendar_ib);
         events_ib = (ImageButton) findViewById(R.id.events_ib);
-        update_ib = (ImageButton) findViewById(R.id.update_ib);
         watch_list_ib = (ImageButton) findViewById(R.id.watch_list_ib);
         search_ib = (ImageButton) findViewById(R.id.search_ib);
 
@@ -127,7 +134,6 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
 
         calendar_ib.setOnClickListener(this);
         events_ib.setOnClickListener(this);
-        update_ib.setOnClickListener(this);
         watch_list_ib.setOnClickListener(this);
         search_ib.setOnClickListener(this);
 

@@ -7,13 +7,13 @@ import java.util.Date;
  */
 public class EventsFactory {
 
-    private int EventID;
+    private String EventID;
 
-    public int getEventID() {
+    public String getEventID() {
         return EventID;
     }
 
-    public void setEventID(int eventID) {
+    public void setEventID(String eventID) {
         EventID = eventID;
     }
 

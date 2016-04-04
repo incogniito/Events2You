@@ -68,7 +68,7 @@ public class EventImagesAdapter extends BaseAdapter{
         convertByteArray.execute(imageFile);
 
         TextView EventID = (TextView)v.findViewById(R.id.identifier);
-        EventID.setText(Integer.toString(events.get(position).getEventID()));
+        EventID.setText(events.get(position).getEventID());
         EventID.setVisibility(View.INVISIBLE);
 
         TextView EventName = (TextView)v.findViewById(R.id.Event_name_tv);

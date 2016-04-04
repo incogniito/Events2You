@@ -99,7 +99,7 @@ public class GetEventsByGenre extends AsyncTask<String, Void, List<EventsFactory
 
                         if (tag.equalsIgnoreCase("eventID"))
                         {
-                            events.setEventID(Integer.parseInt(text));
+                            events.setEventID(text);
                         } else if (tag.equalsIgnoreCase("eventImage"))
                         {
                             byte[] eventImage = Base64.decode(text, Base64.DEFAULT);
@@ -109,7 +109,10 @@ public class GetEventsByGenre extends AsyncTask<String, Void, List<EventsFactory
                         {
                             events.setEventName(text);
                             eventsList.add(events);
-                        }
+                        } else if (tag.equalsIgnoreCase("stringEventID"))
+                    {
+                        events.setEventID(text);
+                    }
                         break;
                 }
                 eventType = parser.next();
@@ -140,5 +143,5 @@ public class GetEventsByGenre extends AsyncTask<String, Void, List<EventsFactory
             AlertDialog dialog = builder.create();
             dialog.show();
         }
-        }
+    }
 }

@@ -7,10 +7,10 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:id="@+id/fragment_images_iv"
+        android:scaleType="fitXY"
         android:layout_alignParentLeft="false"
         android:layout_alignParentStart="false"
-        android:layout_centerVertical="true"
-         />
+        android:layout_centerVertical="true" />
 
     <View
         android:id="@+id/textBackground_v"
@@ -24,11 +24,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#fff"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_alignBottom="@+id/textBackground_v"
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
-        android:text="Event Name"/>
+        android:text="Event Name"
+        android:layout_alignTop="@+id/textBackground_v"
+        android:layout_marginTop="16dp"
+        android:textSize="15dp" />
 
     <TextView
         android:layout_width="wrap_content"
