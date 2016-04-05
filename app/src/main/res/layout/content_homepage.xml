@@ -55,21 +55,28 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ButtonsHolder"
         android:weightSum="1"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentLeft="false"
         android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="30dp">
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/events_ib"
             android:src="@mipmap/events_icon"
-            android:background="#00ffffff"
-            android:layout_gravity="bottom" />
+            android:background="#00ffffff" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/recommended_ib"
+            android:src="@mipmap/recommended"
+            android:background="#00ffffff" />
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -83,7 +90,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/watch_list_ib"
             android:src="@mipmap/watch_list_icon"
-            android:layout_gravity="bottom"
             android:background="#00ffffff" />
 
     </LinearLayout>

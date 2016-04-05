@@ -9,33 +9,35 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.samsonaiyegbusi.events2you.MainUI.WatchList"
-    tools:showIn="@layout/activity_watch_list"
+    tools:context="com.example.samsonaiyegbusi.events2you.MainUI.RecommenderPage"
+    tools:showIn="@layout/activity_recommender_page"
     android:background="@mipmap/app_default_background">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Watch List"
-        android:id="@+id/textView2"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:textColor="#ffffff"
-        android:textSize="30dp" />
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/watchlist_lv"
-        android:layout_below="@+id/textView2"
+    <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/view"
+        android:layout_width="330dp"
+        android:layout_height="330dp"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/linearLayout12" />
+        android:layout_below="@+id/textView3"
+        android:layout_above="@+id/linearLayout11">
+
+        <android.support.v4.view.PagerTitleStrip
+            android:id="@+id/pager_header"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:minHeight="?android:attr/listPreferredItemHeight"
+            android:layout_gravity="top"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:textColor="#fff" />
+    </android.support.v4.view.ViewPager>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout12"
+        android:id="@+id/linearLayout11"
         android:weightSum="1"
         android:layout_alignParentLeft="false"
         android:layout_alignParentStart="true"
@@ -45,29 +47,39 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageButton5"
+            android:id="@+id/rc_events_ib"
             android:src="@mipmap/events_icon"
             android:background="#00ffffff" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageButton6"
+            android:id="@+id/rc_recommend_ib"
             android:src="@mipmap/recommended"
             android:background="#00ffffff" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageButton7"
+            android:id="@+id/rc_calendar_ib"
             android:src="@mipmap/calendar_icon"
             android:background="#00ffffff" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageButton8"
+            android:id="@+id/rc_watchlist_ib"
             android:src="@mipmap/watch_list_icon"
             android:background="#00ffffff" />
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recommended For You"
+        android:id="@+id/textView3"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffff"
+        android:textSize="25dp" />
 </RelativeLayout>

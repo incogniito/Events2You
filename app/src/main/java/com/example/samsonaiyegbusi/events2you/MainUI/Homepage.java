@@ -162,7 +162,6 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
     }
 
     private void initialisePaging() {
-
         GetGenreList genreList = new GetGenreList(this);
 
         try {
@@ -174,6 +173,5 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
         }
         final PagerAdapter pgrAdapter = new PagerAdapter(getSupportFragmentManager(), genre);
         viewPager.setAdapter(pgrAdapter);
-
     }
 }

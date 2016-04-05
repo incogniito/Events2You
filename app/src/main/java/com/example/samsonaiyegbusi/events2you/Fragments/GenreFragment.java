@@ -30,10 +30,9 @@ public class GenreFragment extends ListFragment {
     private EventImagesAdapter eventImagesAdapter;
     public static final String ARG_PAGE = "ARG_PAGE";
     private String genre;
-    private ScaleGestureDetector scaleGD;
     public ImageView imageView;
+    private
 
-    private Matrix matrix = new Matrix();
 
     Bundle bundle;
 
@@ -47,6 +46,17 @@ public class GenreFragment extends ListFragment {
         genreFragment.setArguments(args);
         return genreFragment;
     }
+
+    public static GenreFragment create(int page, String genre, int ba){
+        Bundle args = new Bundle();
+
+        args.putInt(ARG_PAGE, page);
+        args.putString("Genre", genre);
+        GenreFragment genreFragment = new GenreFragment();
+        genreFragment.setArguments(args);
+        return genreFragment;
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState){
