@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.View;
 
+import com.example.samsonaiyegbusi.events2you.MainUI.ChooseInterestPage;
 import com.example.samsonaiyegbusi.events2you.MainUI.LoginPage;
+import com.example.samsonaiyegbusi.events2you.REST_calls.GetUserProfiles;
 
 
 import java.util.HashMap;
@@ -27,6 +29,9 @@ public class SessionManager  {
 
     public static final String username = "username";
     public static final String loggedIn = "loggedIn";
+    public static final String profiles = "profiles";
+    public static final String profilesAdded = "profilesAdded";
+    private HashMap<String, String> user = new HashMap<String, String>();
 
     private int funtionCounter = 0;
     private int count = 0;
@@ -46,9 +51,23 @@ public class SessionManager  {
         editor.commit();
     }
 
+    public void addProfiles(String userProfiles){
+        editor.putBoolean(profilesAdded, true);
+
+        editor.putString(profiles, userProfiles);
+
+        editor.commit();
+    }
+
     public HashMap<String, String> getUserDetails(){
-        HashMap<String, String> user = new HashMap<String, String>();
+
         user.put(username, pref.getString(username, null));
+
+        return user;
+    }
+
+    public HashMap<String, String> getUserProfiles(){
+        user.put(profiles, pref.getString(profiles, null));
 
         return user;
     }
@@ -64,8 +83,22 @@ public class SessionManager  {
 
     }
 
+    public void checkProfilesExistance(String name){
+        if(!this.profilesExist()){
+
+
+            GetUserProfiles userProfiles = new GetUserProfiles(context);
+            userProfiles.execute(new String[]{pref.getString(username, name)});
+        }
+
+    }
+
     public boolean isLoggedIn(){
         return pref.getBoolean(loggedIn, false);
+    }
+
+    public boolean profilesExist(){
+        return pref.getBoolean(profilesAdded, false);
     }
 
     public void logoutUser(){

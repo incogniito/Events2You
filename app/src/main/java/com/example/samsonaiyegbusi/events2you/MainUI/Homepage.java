@@ -44,6 +44,7 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
     ImageButton events_ib;
     ImageButton watch_list_ib;
     ImageButton search_ib;
+    ImageButton recommender_ib;
     Animation animateButton;
     Animation animateSearchButton;
     ViewPager viewPager;
@@ -96,6 +97,11 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
                 Intent takeusertoWatch = new Intent(Homepage.this, WatchList.class);
                 startActivity(takeusertoWatch);
                 break;
+
+            case R.id.recommended_ib:
+
+                Intent takeUserToRecommender = new Intent (Homepage.this, RecommenderPage.class);
+                startActivity(takeUserToRecommender);
         }
 
     }
@@ -121,6 +127,7 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
         events_ib = (ImageButton) findViewById(R.id.events_ib);
         watch_list_ib = (ImageButton) findViewById(R.id.watch_list_ib);
         search_ib = (ImageButton) findViewById(R.id.search_ib);
+        recommender_ib = (ImageButton) findViewById(R.id.recommended_ib);
 
         viewPager = (ViewPager) findViewById(R.id.view);
 
@@ -136,6 +143,7 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
         events_ib.setOnClickListener(this);
         watch_list_ib.setOnClickListener(this);
         search_ib.setOnClickListener(this);
+        recommender_ib.setOnClickListener(this);
 
         bundle = new Bundle();
 

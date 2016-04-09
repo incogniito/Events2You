@@ -14,10 +14,12 @@ import java.util.List;
  */
 public class RecommenderPagerAdapter extends FragmentPagerAdapter {
 
-   public List<String> genre;
+   private List<String> genre;
+   private List<EventsFactory> recommendedList;
     public RecommenderPagerAdapter(FragmentManager fm, List<String> genre, List<EventsFactory> recommendedList){
         super(fm);
         this.genre = genre;
+        this.recommendedList = recommendedList;
 
     }
 
@@ -26,8 +28,7 @@ public class RecommenderPagerAdapter extends FragmentPagerAdapter {
 
         switch(position)
         {
-            default:  return GenreFragment.create(position+1, genre.get(position).toString());
-
+            default:  return GenreFragment.create(position+1, genre.get(position).toString(), recommendedList);
         }
 
     }

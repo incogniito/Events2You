@@ -16,10 +16,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.samsonaiyegbusi.events2you.Adapters.EventImagesAdapter;
+import com.example.samsonaiyegbusi.events2you.GettersAndSetters.EventsFactory;
 import com.example.samsonaiyegbusi.events2you.MainUI.ChosenEventPage;
 import com.example.samsonaiyegbusi.events2you.R;
 
 import java.io.ByteArrayOutputStream;
+import java.util.List;
 
 
 /**
@@ -31,7 +33,7 @@ public class GenreFragment extends ListFragment {
     public static final String ARG_PAGE = "ARG_PAGE";
     private String genre;
     public ImageView imageView;
-    private
+    private static List<EventsFactory> Events;
 
 
     Bundle bundle;
@@ -47,9 +49,9 @@ public class GenreFragment extends ListFragment {
         return genreFragment;
     }
 
-    public static GenreFragment create(int page, String genre, int ba){
+    public static GenreFragment create(int page, String genre, List<EventsFactory> events){
         Bundle args = new Bundle();
-
+        Events = events;
         args.putInt(ARG_PAGE, page);
         args.putString("Genre", genre);
         GenreFragment genreFragment = new GenreFragment();
@@ -70,7 +72,12 @@ public class GenreFragment extends ListFragment {
    public View onCreateView(LayoutInflater inflator, ViewGroup container, Bundle savedInstanceState ) {
        View rootView = inflator.inflate(R.layout.fragment_event_image_list, container, false);
 
-       eventImagesAdapter = new EventImagesAdapter(getActivity(), genre);
+       if (Events==null) {
+
+           eventImagesAdapter = new EventImagesAdapter(getActivity(), genre);
+       } else{
+           eventImagesAdapter = new EventImagesAdapter(getActivity(), genre, Events);
+       }
        setListAdapter(eventImagesAdapter);
        return rootView;
    }

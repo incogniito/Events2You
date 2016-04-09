@@ -13,6 +13,7 @@ import com.example.samsonaiyegbusi.events2you.GettersAndSetters.EventsFactory;
 import com.example.samsonaiyegbusi.events2you.R;
 import com.example.samsonaiyegbusi.events2you.REST_calls.GetEventsByGenre;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -21,7 +22,7 @@ import java.util.concurrent.ExecutionException;
  */
 public class EventImagesAdapter extends BaseAdapter{
 
-    List<EventsFactory> events;
+    List<EventsFactory> events = new ArrayList();
     Context context;
 
     public EventImagesAdapter(Context context, final String genre){
@@ -34,6 +35,17 @@ public class EventImagesAdapter extends BaseAdapter{
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
+        }
+    }
+
+    public EventImagesAdapter(Context context, final String genre, List<EventsFactory> events){
+
+        this.context = context;
+        for (EventsFactory event : events){
+            if (event.getEventGenre().equalsIgnoreCase(genre))
+            {
+                this.events.add(event);
+            }
         }
     }
 

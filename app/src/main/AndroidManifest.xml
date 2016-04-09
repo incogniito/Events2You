@@ -76,6 +76,10 @@
         <activity
             android:name=".MainUI.RecommenderPage"
             android:label="@string/title_activity_recommender_page"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MainUI.ChooseInterestPage"
+            android:label="@string/title_activity_choose_interest_page"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
