@@ -57,7 +57,7 @@ public class PostInterests extends AsyncTask<String, Void, String> {
         HTTP_Methods http_methods = new HTTP_Methods();
         String parameters = ("interests="+interests+"&username="+username);
 
-        String response = http_methods.POST(url, parameters);
+        String response = http_methods.PUT(url, parameters);
 
 
         List<String> userProfiles = new ArrayList(Arrays.asList(interests.split(",")));

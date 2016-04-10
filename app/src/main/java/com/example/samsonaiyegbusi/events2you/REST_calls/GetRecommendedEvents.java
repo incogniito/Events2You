@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.util.Base64;
 
 import com.example.samsonaiyegbusi.events2you.GettersAndSetters.EventsFactory;
+import com.example.samsonaiyegbusi.events2you.SessionManager;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -16,6 +17,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -23,7 +25,7 @@ import java.util.List;
  */
 public class GetRecommendedEvents extends AsyncTask<String, Void, List<EventsFactory>> {
 
-    String url = "/events/recommendations";
+    String url = "/events/recommendonuserprofiles?";
     List<EventsFactory> eventsList;
     EventsFactory events;
 
@@ -31,6 +33,7 @@ public class GetRecommendedEvents extends AsyncTask<String, Void, List<EventsFac
 
     ProgressDialog progressDialog;
     Context context;
+    SessionManager session;
 
     public GetRecommendedEvents(Context context)
     {
@@ -53,10 +56,12 @@ public class GetRecommendedEvents extends AsyncTask<String, Void, List<EventsFac
     @Override
     protected List<EventsFactory> doInBackground(String... params) {
 
+        String profiles = params[0];
 
+        String parameters = "userprofiles="+profiles.replaceAll(" ","");
 
         HTTP_Methods http_methods = new HTTP_Methods();
-        String response = http_methods.GET(url);
+        String response = http_methods.GET(url + parameters);
 
         return parseXML(response);
 

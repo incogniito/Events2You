@@ -23,6 +23,7 @@ import com.example.samsonaiyegbusi.events2you.REST_calls.GetRecommendedEvents;
 import com.example.samsonaiyegbusi.events2you.SessionManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -60,8 +61,7 @@ public class RecommenderPage extends AppCompatActivity implements Initialiser{
     @Override
     public void variableInitialiser() {
 
-        session = new SessionManager(this);
-        session.checkProfilesExistance();
+
 
     }
 
@@ -87,8 +87,12 @@ public class RecommenderPage extends AppCompatActivity implements Initialiser{
     private void initialisePaging() {
         GetRecommendedEvents recommendedEvents = new GetRecommendedEvents(this);
         List<EventsFactory>  recommended = null;
+
+        session = new SessionManager(this);
+        HashMap<String, String> userprofile = session.getUserProfiles();
+        String profiles = userprofile.get(SessionManager.profiles);
         try {
-              recommended = recommendedEvents.execute(new String[]{}).get();
+              recommended = recommendedEvents.execute(new String[]{ profiles}).get();
             for (EventsFactory events: recommended ){
                 if (!genre.contains(events.getEventGenre()))
                 genre.add(events.getEventGenre());

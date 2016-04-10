@@ -17,6 +17,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -24,7 +25,7 @@ import java.util.List;
  */
 public class GetUserProfiles extends AsyncTask<String, Void, String> {
 
-    String url = "users/getuserprofile?username =";
+    String url = "/users/getuserprofile?username=";
 
     ProgressDialog progressDialog;
     Context context;
@@ -51,8 +52,11 @@ public class GetUserProfiles extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... params) {
 
+        session = new SessionManager(context);
+        HashMap<String, String> user = session.getUserDetails();
+        String username = user.get(SessionManager.username);
         HTTP_Methods http_methods = new HTTP_Methods();
-        String response = http_methods.GET(url);
+        String response = http_methods.GET(url + username);
 
         return response.replace("\n", "");
 
@@ -63,7 +67,7 @@ public class GetUserProfiles extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String strings) {
         progressDialog.dismiss();
         if (strings != null) {
-            if(!strings.equalsIgnoreCase("null")) {
+            if(!strings.equalsIgnoreCase("")) {
 
                 session = new SessionManager(context);
                 session.addProfiles(strings);

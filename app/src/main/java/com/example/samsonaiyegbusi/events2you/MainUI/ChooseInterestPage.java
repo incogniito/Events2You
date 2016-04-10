@@ -15,6 +15,8 @@ import com.example.samsonaiyegbusi.events2you.Initialiser;
 import com.example.samsonaiyegbusi.events2you.R;
 import com.example.samsonaiyegbusi.events2you.REST_calls.GetRecommendedEvents;
 import com.example.samsonaiyegbusi.events2you.REST_calls.GetSuggestions;
+import com.example.samsonaiyegbusi.events2you.REST_calls.PostEvent;
+import com.example.samsonaiyegbusi.events2you.REST_calls.PostInterests;
 import com.example.samsonaiyegbusi.events2you.SessionManager;
 
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ public class ChooseInterestPage extends AppCompatActivity implements Initialiser
     TextView interestList_tv;
 
     GetSuggestions getSuggestions;
-    GetRecommendedEvents getRecommendedEvents;
+    PostInterests postInterests;
     List<String> suggestions;
     List<String> chosenInterests;
 
@@ -58,6 +60,7 @@ public class ChooseInterestPage extends AppCompatActivity implements Initialiser
 
                 String interest =  interestSearch.getText().toString();
 
+                interestSearch.setText("");
                 chosenInterests.add(interest);
                 addInterestToInterestList();
 
@@ -69,9 +72,11 @@ public class ChooseInterestPage extends AppCompatActivity implements Initialiser
 
                 String username = user.get(SessionManager.username);
 
-                String interests = interestList_tv.getText().toString().replaceAll(",", "-");
+                String interests = interestList_tv.getText().toString();
 
-                getRecommendedEvents.execute(new String[]{interests, username});
+                postInterests = new PostInterests(this);
+
+                postInterests.execute(new String[]{interests, username});
 
                 break;
         }
@@ -81,6 +86,8 @@ public class ChooseInterestPage extends AppCompatActivity implements Initialiser
     public void variableInitialiser() {
         session = new SessionManager(this);
         chosenInterests = new ArrayList();
+
+        getSuggestions = new GetSuggestions(this);
         try {
             suggestions = getSuggestions.execute(new String[]{}).get();
         } catch (InterruptedException e) {
@@ -95,7 +102,9 @@ public class ChooseInterestPage extends AppCompatActivity implements Initialiser
 
         interestSearch = (AutoCompleteTextView) findViewById(R.id.interestSearch);
         addInterest_ib = (ImageButton) findViewById(R.id.add_interest_ib);
+        addInterest_ib.setOnClickListener(this);
         recommendEvents_ib = (ImageButton) findViewById(R.id.recommend_events_ib);
+        recommendEvents_ib.setOnClickListener(this);
         interestList_tv = (TextView) findViewById(R.id.interestList_tv);
 
     }

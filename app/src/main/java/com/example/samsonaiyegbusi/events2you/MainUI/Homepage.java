@@ -27,6 +27,7 @@ import com.example.samsonaiyegbusi.events2you.REST_calls.GetGenreList;
 import com.example.samsonaiyegbusi.events2you.SessionManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -100,8 +101,10 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
 
             case R.id.recommended_ib:
 
-                Intent takeUserToRecommender = new Intent (Homepage.this, RecommenderPage.class);
-                startActivity(takeUserToRecommender);
+                HashMap<String, String> user = mainSession.getUserDetails();
+                String username = user.get(SessionManager.username);
+                mainSession.checkProfilesExistance(username);
+
         }
 
     }

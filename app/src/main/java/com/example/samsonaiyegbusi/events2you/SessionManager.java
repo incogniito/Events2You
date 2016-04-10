@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.example.samsonaiyegbusi.events2you.MainUI.ChooseInterestPage;
 import com.example.samsonaiyegbusi.events2you.MainUI.LoginPage;
+import com.example.samsonaiyegbusi.events2you.MainUI.RecommenderPage;
 import com.example.samsonaiyegbusi.events2you.REST_calls.GetUserProfiles;
 
 
@@ -85,10 +86,11 @@ public class SessionManager  {
 
     public void checkProfilesExistance(String name){
         if(!this.profilesExist()){
-
-
             GetUserProfiles userProfiles = new GetUserProfiles(context);
             userProfiles.execute(new String[]{pref.getString(username, name)});
+        }else{
+            Intent takeUserToRecommender = new Intent (context, RecommenderPage.class);
+            context.startActivity(takeUserToRecommender);
         }
 
     }
