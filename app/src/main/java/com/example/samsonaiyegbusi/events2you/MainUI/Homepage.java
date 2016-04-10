@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.example.samsonaiyegbusi.events2you.Adapters.PagerAdapter;
 import com.example.samsonaiyegbusi.events2you.Initialiser;
 import com.example.samsonaiyegbusi.events2you.R;
+import com.example.samsonaiyegbusi.events2you.REST_calls.GetFriends;
 import com.example.samsonaiyegbusi.events2you.REST_calls.GetGenreList;
 import com.example.samsonaiyegbusi.events2you.SessionManager;
 
@@ -35,7 +36,7 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
 
     SessionManager mainSession;
 
-    String[] menu = {"Add Event", "Logout"};
+    String[] menu = {"Add Event","Friends", "Logout"};
     private ListView menuDrawerList;
     private ArrayAdapter<String> menuAdapter;
 
@@ -103,7 +104,8 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
 
                 HashMap<String, String> user = mainSession.getUserDetails();
                 String username = user.get(SessionManager.username);
-                mainSession.checkProfilesExistance(username);
+                String friends = user.get(SessionManager.friends);
+                mainSession.checkProfilesExistance(username, friends);
 
         }
 
@@ -163,12 +165,19 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
         } else if (menu[position].equalsIgnoreCase("Logout"))
         {
             mainSession.logoutUser();
+        }else if (menu[position].equalsIgnoreCase("Friends"))
+        {
+            HashMap<String, String> user = mainSession.getUserDetails();
+            String username = user.get(SessionManager.username);
+
+            GetFriends getFriends = new GetFriends(this);
+            getFriends.execute(new String[]{username});
         }
     }
 
     private void addDrawerItems() {
 
-        menuAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menu);
+        menuAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, menu);
         menuDrawerList.setAdapter(menuAdapter);
     }
 

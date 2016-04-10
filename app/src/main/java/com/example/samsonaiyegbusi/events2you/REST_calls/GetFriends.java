@@ -40,7 +40,7 @@ public class GetFriends extends AsyncTask<String, Void, String> {
     @Override
     protected void onPreExecute() {
         progressDialog = new ProgressDialog(context);
-        progressDialog.setTitle("Logging You In");
+        progressDialog.setTitle("Finding Your friends");
         progressDialog.setMessage("Please Wait...");
         progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
             @Override
@@ -70,10 +70,10 @@ public class GetFriends extends AsyncTask<String, Void, String> {
 
             ArrayList<String> friendsList = new ArrayList(Arrays.asList(s.split(",")));
 
-
             bundle = new Bundle();
 
             bundle.putStringArrayList("friends",friendsList);
+            bundle.putBoolean("friendsRecommender", true);
             Intent takeUserToHome = new Intent(context, AddFriendsPage.class);
             takeUserToHome.putExtras(bundle);
             context.startActivity(takeUserToHome);

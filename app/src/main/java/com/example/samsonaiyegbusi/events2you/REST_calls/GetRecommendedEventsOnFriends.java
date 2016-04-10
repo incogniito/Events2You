@@ -17,17 +17,14 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by samsonaiyegbusi on 13/03/16.
  */
-public class GetRecommendedEvents extends AsyncTask<String, Void, List<EventsFactory>> {
+public class GetRecommendedEventsOnFriends extends AsyncTask<String, Void, List<EventsFactory>> {
 
-
-
-    String url = "/events/recommendonuserprofiles?";
+    String url = "/watchedevents/recommendonfriends?";
     List<EventsFactory> eventsList;
     EventsFactory events;
 
@@ -37,7 +34,7 @@ public class GetRecommendedEvents extends AsyncTask<String, Void, List<EventsFac
     Context context;
     SessionManager session;
 
-    public GetRecommendedEvents(Context context)
+    public GetRecommendedEventsOnFriends(Context context)
     {
         this.context = context;
     }
@@ -57,16 +54,16 @@ public class GetRecommendedEvents extends AsyncTask<String, Void, List<EventsFac
 
     @Override
     protected List<EventsFactory> doInBackground(String... params) {
+        String username = params[0];
+        String friend = params[1];
+        String profiles = params[2];
 
-        String profiles = params[0];
-
-        String parameters = "userprofiles="+profiles.replaceAll(" ","");
+        String parameters = "username="+username+"&friend="+friend+"&userprofiles="+profiles.replaceAll(" ","");
 
         HTTP_Methods http_methods = new HTTP_Methods();
         String response = http_methods.GET(url + parameters);
 
         return parseXML(response);
-
     }
 
     public  List<EventsFactory> parseXML(String xml)

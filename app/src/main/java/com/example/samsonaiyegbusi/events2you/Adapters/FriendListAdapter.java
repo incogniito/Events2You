@@ -25,12 +25,20 @@ public class FriendListAdapter extends BaseAdapter implements View.OnClickListen
     Context context;
     List<String> friendlist;
     TextView username_tv;
-    String username;
+    String Username;
+    Boolean recommmenderFriends;
 
     public FriendListAdapter(Context context, List<String> friendlist, String username){
         this.context = context;
         this.friendlist = friendlist;
-        this.username = username;
+        this.Username = username;
+    }
+
+    public FriendListAdapter(Context context, List<String> friendlist, String username, Boolean recommmenderFriends){
+        this.context = context;
+        this.friendlist = friendlist;
+        this.Username = username;
+        this.recommmenderFriends=recommmenderFriends;
     }
 
 
@@ -57,27 +65,32 @@ public class FriendListAdapter extends BaseAdapter implements View.OnClickListen
             v = inflator.inflate(R.layout.friend_list_item, null);
         }
 
+            username_tv = (TextView) v.findViewById(R.id.friendUsername);
+            ImageButton removeFriend = (ImageButton) v.findViewById(R.id.removefriend_ib);
+            removeFriend.setOnClickListener(this);
 
-         username_tv = (TextView) v.findViewById(R.id.friendUsername);
-        ImageButton removeFriend = (ImageButton) v.findViewById(R.id.removefriend_ib);
-        removeFriend.setOnClickListener(this);
+            String friendsName = friendlist.get(position);
 
-        String friendsName = friendlist.get(position);
+            if (friendlist.get(0).equalsIgnoreCase("You have no Friends :(")){
+            removeFriend.setVisibility(View.INVISIBLE);
+            }
 
+            username_tv.setText(friendsName);
 
-        username_tv.setText(friendsName);
         return v;
     }
 
     @Override
     public void onClick(View v) {
         notifyDataSetChanged();
-      String username =   username_tv.getText().toString();
+
+        String username =   username_tv.getText().toString();
         if (friendlist.contains(username))
         {
             friendlist.remove(username);
-        }
 
+        }
+        if (recommmenderFriends == null) {
         StringBuilder sb = new StringBuilder();
         for (String str: friendlist)
         {
@@ -88,8 +101,13 @@ public class FriendListAdapter extends BaseAdapter implements View.OnClickListen
             }
         }
 
-        PutFriends putFriends = new PutFriends(context);
-        putFriends.execute(new String[]{username, sb.toString()});
+            PutFriends putFriends = new PutFriends(context);
+            putFriends.execute(new String[]{Username, sb.toString()});
+        }
+        if (friendlist.isEmpty())
+        {
+            friendlist.add("You have no Friends :(");
+        }
 
     }
 }

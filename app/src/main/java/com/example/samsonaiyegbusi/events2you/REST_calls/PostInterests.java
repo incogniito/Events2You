@@ -14,6 +14,7 @@ import com.example.samsonaiyegbusi.events2you.SessionManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -73,11 +74,12 @@ public class PostInterests extends AsyncTask<String, Void, String> {
 
             session = new SessionManager(context);
             session.addProfiles(s);
+            HashMap<String, String> user = session.getUserDetails();
 
+            String username = user.get(SessionManager.username);
+            String friends = user.get(SessionManager.friends);
 
-            Intent takeUserToRecommender = new Intent(context, RecommenderPage.class);
-            takeUserToRecommender.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            context.startActivity(takeUserToRecommender);
+            session.checkProfilesExistance(username,friends);
 
         }else {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);

@@ -8,21 +8,21 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.example.samsonaiyegbusi.events2you.MainUI.RecommenderPage;
+import com.example.samsonaiyegbusi.events2you.MainUI.Homepage;
 import com.example.samsonaiyegbusi.events2you.SessionManager;
 
 /**
  * Created by samsonaiyegbusi on 30/03/16.
  */
-public class PutFriends extends AsyncTask<String, Void, String> {
+public class PutBehaviouralUserProfile extends AsyncTask<String, Void, String> {
 
-    String url = "/users/addfriends";
+    String url = "/users/behavioruserprofile";
 
     ProgressDialog progressDialog;
     Context context;
     SessionManager session;
 
-    public PutFriends(Context context){
+    public PutBehaviouralUserProfile(Context context){
         this.context = context;
     }
 
@@ -30,7 +30,7 @@ public class PutFriends extends AsyncTask<String, Void, String> {
     @Override
     protected void onPreExecute() {
         progressDialog = new ProgressDialog(context);
-        progressDialog.setTitle("Updating your Friends List");
+        progressDialog.setTitle("Updating your User Profile");
         progressDialog.setMessage("Please Wait...");
         progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
             @Override
@@ -44,13 +44,13 @@ public class PutFriends extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... params) {
 
-        String username = params[0];
-        String friends = params[1];
+        String eventdescription = params[0];
+        String username = params[1];
 
 
 
         HTTP_Methods http_methods = new HTTP_Methods();
-        String parameters = ("username="+username+"&friends="+friends);
+        String parameters = ("username="+username+"&eventdescription="+eventdescription);
 
         String response = http_methods.PUT(url, parameters);
 
@@ -61,8 +61,14 @@ public class PutFriends extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String s) {
         progressDialog.dismiss();
         if (s != null) {
-
-            Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
+            if (s.equalsIgnoreCase("Complete")) {
+                Toast.makeText(context, "This event has been added to your watch list", Toast.LENGTH_SHORT).show();
+                Intent takeUserToLogin = new Intent(context, Homepage.class);
+                takeUserToLogin.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                context.startActivity(takeUserToLogin);
+            } else {
+                Toast.makeText(context, "There has been a problem", Toast.LENGTH_SHORT).show();
+            }
 
         }else {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);

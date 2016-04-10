@@ -24,6 +24,8 @@ public class PostWatchedEvents extends AsyncTask<String, Void, String> {
         this.context = context;
     }
 
+    String username;
+    String eventDescription;
 
     @Override
     protected void onPreExecute() {
@@ -47,9 +49,9 @@ public class PostWatchedEvents extends AsyncTask<String, Void, String> {
         String eventStartTime = params[2];
         String eventFinishTime = params[3];
         String eventAddress = params[4];
-        String eventDescription = params[5];
+         eventDescription = params[5];
         String eventImage = params[6];
-        String username = params[7];
+         username = params[7];
         String eventID = params[8];
         String eventOwner = params[9];
 
@@ -65,13 +67,9 @@ public class PostWatchedEvents extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String s) {
         progressDialog.dismiss();
         if (s != null) {
-
-
             if (s.equalsIgnoreCase("Successful")) {
-                Toast.makeText(context, "This event has been added to your watch list", Toast.LENGTH_SHORT).show();
-                Intent takeUserToLogin = new Intent(context, Homepage.class);
-                takeUserToLogin.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                context.startActivity(takeUserToLogin);
+                PutBehaviouralUserProfile updateUserProfile = new PutBehaviouralUserProfile(context);
+                updateUserProfile.execute(new String[]{eventDescription, username});
             } else {
                 Toast.makeText(context, "There has been a problem", Toast.LENGTH_SHORT).show();
             }

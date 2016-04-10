@@ -4,15 +4,23 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.view.View;
 
+import com.example.samsonaiyegbusi.events2you.GettersAndSetters.EventsFactory;
+import com.example.samsonaiyegbusi.events2you.MainUI.AddFriendsPage;
 import com.example.samsonaiyegbusi.events2you.MainUI.ChooseInterestPage;
 import com.example.samsonaiyegbusi.events2you.MainUI.LoginPage;
 import com.example.samsonaiyegbusi.events2you.MainUI.RecommenderPage;
+import com.example.samsonaiyegbusi.events2you.REST_calls.GetRecommendedEventsOnFriends;
 import com.example.samsonaiyegbusi.events2you.REST_calls.GetUserProfiles;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by samsonaiyegbusi on 15/03/16.
@@ -32,6 +40,10 @@ public class SessionManager  {
     public static final String loggedIn = "loggedIn";
     public static final String profiles = "profiles";
     public static final String profilesAdded = "profilesAdded";
+    public static final String friends = "friends";
+    public static final String friendsAdded = "friendsAdded";
+    public static final String recommenderfriends = "recommenderfriends";
+    public static final String recommenderfriendsAdded = "recommenderfriendsAdded";
     private HashMap<String, String> user = new HashMap<String, String>();
 
     private int funtionCounter = 0;
@@ -60,18 +72,35 @@ public class SessionManager  {
         editor.commit();
     }
 
+    public void addrecommenderfriends(String userProfiles){
+        editor.putBoolean(recommenderfriendsAdded, true);
+
+        editor.putString(recommenderfriends, userProfiles);
+
+        editor.commit();
+    }
+
+    public void addfriends(String allfriends){
+
+        editor.putBoolean(friendsAdded, true);
+
+
+        editor.putString(friends, allfriends);
+
+        editor.commit();
+    }
+
     public HashMap<String, String> getUserDetails(){
 
         user.put(username, pref.getString(username, null));
-
-        return user;
-    }
-
-    public HashMap<String, String> getUserProfiles(){
         user.put(profiles, pref.getString(profiles, null));
+        user.put(friends, pref.getString(friends, null));
+        user.put(recommenderfriends, pref.getString(recommenderfriends, null));
 
         return user;
     }
+
+
 
     public void checkLogin(){
         if(!this.isLoggedIn()){
@@ -84,16 +113,39 @@ public class SessionManager  {
 
     }
 
-    public void checkProfilesExistance(String name){
+    public void checkProfilesExistance(String name, String friends){
         if(!this.profilesExist()){
             GetUserProfiles userProfiles = new GetUserProfiles(context);
             userProfiles.execute(new String[]{pref.getString(username, name)});
         }else{
-            Intent takeUserToRecommender = new Intent (context, RecommenderPage.class);
-            context.startActivity(takeUserToRecommender);
+            if(!hasFriends()) {
+                Bundle bundle = new Bundle();
+                Intent takeUserToRecommender = new Intent(context, RecommenderPage.class);
+                takeUserToRecommender.putExtras(bundle);
+                context.startActivity(takeUserToRecommender);
+            } else if (hasFriends()){
+                if (!hasrecommenderFriends())
+                {
+
+                    ArrayList<String> friendsList = new ArrayList(Arrays.asList(friends.split(",")));
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean("friendsRecommender", false);
+                    bundle.putStringArrayList("friends",friendsList);
+                    Intent takeUserToChooseFriends = new Intent(context, AddFriendsPage.class);
+                    takeUserToChooseFriends.putExtras(bundle);
+                    context.startActivity(takeUserToChooseFriends);
+                } else{
+                    Bundle bundle = new Bundle();
+                    Intent takeUserToRecommender = new Intent(context, RecommenderPage.class);
+                    takeUserToRecommender.putExtras(bundle);
+                    context.startActivity(takeUserToRecommender);
+                }
+            }
         }
 
     }
+
+
 
     public boolean isLoggedIn(){
         return pref.getBoolean(loggedIn, false);
@@ -101,6 +153,13 @@ public class SessionManager  {
 
     public boolean profilesExist(){
         return pref.getBoolean(profilesAdded, false);
+    }
+
+    public boolean hasFriends(){
+        return pref.getBoolean(friendsAdded, false);
+    }
+    public boolean hasrecommenderFriends(){
+        return pref.getBoolean(recommenderfriendsAdded, false);
     }
 
     public void logoutUser(){
