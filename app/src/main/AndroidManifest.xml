@@ -80,6 +80,10 @@
         <activity
             android:name=".MainUI.ChooseInterestPage"
             android:label="@string/title_activity_choose_interest_page"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MainUI.AddFriendsPage"
+            android:label="@string/title_activity_add_friends_page"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

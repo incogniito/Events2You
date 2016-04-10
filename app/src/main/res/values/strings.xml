@@ -15,4 +15,5 @@
     <string name="title_activity_watch_list">WatchList</string>
     <string name="title_activity_recommender_page">RecommenderPage</string>
     <string name="title_activity_choose_interest_page">ChooseInterestPage</string>
+    <string name="title_activity_add_friends_page">AddFriendsPage</string>
 </resources>

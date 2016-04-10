@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.samsonaiyegbusi.events2you.MainUI.AddFriendsPage"
+    tools:showIn="@layout/activity_add_friends_page"
+    android:background="@mipmap/app_default_background">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout14"
+        android:layout_below="@+id/textView5"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <AutoCompleteTextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textColorHint="#96ffffff"
+            android:id="@+id/searchFriends"
+            android:textColor="#ffffff"
+            android:layout_weight="1"
+            android:hint="Search your friends username"
+            android:background="#00ffffff"
+            android:layout_below="@+id/textView4"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/addFriends"
+            android:src="@mipmap/add_icon"
+            android:background="#00ffffff" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Friends"
+        android:id="@+id/textView5"
+        android:textColor="#ffffff"
+        android:textSize="25dp"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Find Friends Through Facebook"
+        android:id="@+id/textView6"
+        android:textColor="#ffffff"
+        android:textSize="20dp"
+        android:layout_marginBottom="134dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addFriendFB_ib"
+        android:layout_alignTop="@+id/textView6"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="55dp"
+        android:src="@mipmap/facebook_new"
+        android:background="#00ffffff" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/linearLayout14"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/textView6"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your Friends List"
+            android:id="@+id/textView8"
+            android:textColor="#ffffff"
+            android:textSize="25dp"
+            android:layout_below="@+id/linearLayout14"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/friendsList_lv"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+
+</RelativeLayout>
