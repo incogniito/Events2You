@@ -36,6 +36,8 @@ public class PreviewPage extends AppCompatActivity implements Initialiser{
     EditText preview_description;
     EditText preview_time;
     EditText preview_finish_time;
+    EditText preview_tags;
+    EditText preview_category;
     Bundle bundle;
 
     SessionManager session;
@@ -95,6 +97,8 @@ session = new SessionManager(this);
         preview_description = (EditText) findViewById(R.id.preview_description_et);
         preview_time = (EditText) findViewById(R.id.preview_time_et);
         preview_finish_time = (EditText) findViewById(R.id.preview_finish_time_et);
+        preview_tags = (EditText) findViewById(R.id.preview_tags);
+        preview_category = (EditText) findViewById(R.id.previewGenre);
 
 
         preview_save.setOnClickListener(this);
@@ -132,6 +136,11 @@ session = new SessionManager(this);
 
         String _description = bundle.getString("Description");
         preview_description.setText(_description);
+        String genre = bundle.getString("category");
+        String tag = bundle.getString("tags");
+        preview_tags.setText(tag);
+        preview_category.setText(genre);
+        
     }
 
     private void saveDataSetup(){
@@ -146,10 +155,12 @@ session = new SessionManager(this);
         String _description = preview_description.getText().toString();
         String _finishTime = preview_finish_time.getText().toString();
         HashMap<String, String> user = session.getUserDetails();
+        String genre = bundle.getString("category");
+        String tag = bundle.getString("tags");
 
         String username = user.get(SessionManager.username);
 
         PostEvent newEvent = new PostEvent(this);
-        newEvent.execute(new String[]{_name, _date, _starttime, _finishTime, _address, _description, eventImage, username});
+        newEvent.execute(new String[]{_name, _date, _starttime, _finishTime, _address, _description, eventImage, username, genre, tag});
     }
 }

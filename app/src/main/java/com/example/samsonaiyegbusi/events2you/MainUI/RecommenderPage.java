@@ -97,10 +97,7 @@ public class RecommenderPage extends AppCompatActivity implements Initialiser{
 
         try {
               recommended = recommendedEvents.execute(new String[]{ profiles}).get();
-            for (EventsFactory events: recommended ){
-                if (!genre.contains(events.getEventGenre()))
-                genre.add(events.getEventGenre());
-            }
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -114,6 +111,7 @@ public class RecommenderPage extends AppCompatActivity implements Initialiser{
 
         for (String friend : friendsList) {
                 GetRecommendedEventsOnFriends recommendedEventsOnFriends = new GetRecommendedEventsOnFriends(this);
+
                 try {
                    recommended.addAll(recommendedEventsOnFriends.execute(new String[]{username, friend, profiles }).get());
                 } catch (InterruptedException e) {
@@ -124,6 +122,10 @@ public class RecommenderPage extends AppCompatActivity implements Initialiser{
             }
         }
 
+        for (EventsFactory events: recommended ){
+            if (!genre.contains(events.getEventGenre()))
+                genre.add(events.getEventGenre());
+        }
 
         if (recommended != null) {
             final RecommenderPagerAdapter pgrAdapter = new RecommenderPagerAdapter(getSupportFragmentManager(), genre, recommended);

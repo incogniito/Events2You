@@ -11,6 +11,9 @@ import android.widget.Toast;
 import com.example.samsonaiyegbusi.events2you.MainUI.Homepage;
 import com.example.samsonaiyegbusi.events2you.SessionManager;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 /**
  * Created by samsonaiyegbusi on 30/03/16.
  */
@@ -46,11 +49,17 @@ public class PutBehaviouralUserProfile extends AsyncTask<String, Void, String> {
 
         String eventdescription = params[0];
         String username = params[1];
+        String tags = params[2];
 
 
 
         HTTP_Methods http_methods = new HTTP_Methods();
-        String parameters = ("username="+username+"&eventdescription="+eventdescription);
+        String parameters = null;
+        try {
+            parameters = ("username="+username+"&eventdescription="+ URLEncoder.encode(eventdescription,"UTF-8")+"&tags="+tags);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
         String response = http_methods.PUT(url, parameters);
 

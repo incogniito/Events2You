@@ -184,6 +184,7 @@ public class AddFriendsPage extends AppCompatActivity implements Initialiser{
         if (recommenderFriends == false){
             TextView tv5 = (TextView) findViewById(R.id.textView5);
             tv5.setText("Filter Recommendation on Friends");
+            tv5.setTextSize(10);
             TextView tv8 = (TextView) findViewById(R.id.textView8);
             tv8.setText("Your Friends Filter List");
             TextView tv6 = (TextView) findViewById(R.id.textView6);
@@ -192,9 +193,6 @@ public class AddFriendsPage extends AppCompatActivity implements Initialiser{
             tv6.setVisibility(View.INVISIBLE);
             saveFriendFilter.setVisibility(View.VISIBLE);
             saveFriendFilter.setOnClickListener(this);
-
-
-
         }
 
     }

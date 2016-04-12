@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.samsonaiyegbusi.events2you.Initialiser;
 import com.example.samsonaiyegbusi.events2you.R;
+import com.example.samsonaiyegbusi.events2you.REST_calls.GetEventTagSuggestions;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -50,6 +51,13 @@ public class FindAddressPage extends AppCompatActivity implements Initialiser, O
         variableInitialiser();
         widgetInitialiser();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        GetEventTagSuggestions suggestions = new GetEventTagSuggestions(this, bundle);
+        suggestions.execute(new String[]{});
     }
 
     @Override

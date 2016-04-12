@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Your Event Information"
+            android:text="Enter Your Event Information"
             android:id="@+id/textView"
             android:layout_gravity="center_horizontal"
             android:textColor="#ffffff"

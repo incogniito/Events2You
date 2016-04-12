@@ -16,4 +16,5 @@
     <string name="title_activity_recommender_page">RecommenderPage</string>
     <string name="title_activity_choose_interest_page">ChooseInterestPage</string>
     <string name="title_activity_add_friends_page">AddFriendsPage</string>
+    <string name="title_activity_categorise_event_page">CategoriseEventPage</string>
 </resources>

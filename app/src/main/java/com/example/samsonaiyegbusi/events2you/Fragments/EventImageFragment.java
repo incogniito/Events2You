@@ -46,8 +46,6 @@ public class EventImageFragment extends Fragment {
             return null;
         }
 
-
-
         View view = inflator.inflate(R.layout.fragment_event_image, container, false);
 
         showImage = (ImageView) view.findViewById(R.id.chosen_image_iv);

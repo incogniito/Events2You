@@ -120,7 +120,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/saveFriendFilter"
-                android:src="@mipmap/save_icon"
+                android:src="@mipmap/save_icon3"
                 android:background="#00ffffff" />
         </LinearLayout>
     </LinearLayout>

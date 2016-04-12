@@ -119,11 +119,9 @@ public class SessionManager  {
             userProfiles.execute(new String[]{pref.getString(username, name)});
         }else{
             if(!hasFriends()) {
-                Bundle bundle = new Bundle();
                 Intent takeUserToRecommender = new Intent(context, RecommenderPage.class);
-                takeUserToRecommender.putExtras(bundle);
                 context.startActivity(takeUserToRecommender);
-            } else if (hasFriends()){
+            } else {
                 if (!hasrecommenderFriends())
                 {
 
@@ -135,9 +133,7 @@ public class SessionManager  {
                     takeUserToChooseFriends.putExtras(bundle);
                     context.startActivity(takeUserToChooseFriends);
                 } else{
-                    Bundle bundle = new Bundle();
                     Intent takeUserToRecommender = new Intent(context, RecommenderPage.class);
-                    takeUserToRecommender.putExtras(bundle);
                     context.startActivity(takeUserToRecommender);
                 }
             }

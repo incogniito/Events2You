@@ -10,6 +10,9 @@ import android.widget.Toast;
 
 import com.example.samsonaiyegbusi.events2you.MainUI.Homepage;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 /**
  * Created by samsonaiyegbusi on 30/03/16.
  */
@@ -26,6 +29,7 @@ public class PostWatchedEvents extends AsyncTask<String, Void, String> {
 
     String username;
     String eventDescription;
+    String tags;
 
     @Override
     protected void onPreExecute() {
@@ -54,10 +58,16 @@ public class PostWatchedEvents extends AsyncTask<String, Void, String> {
          username = params[7];
         String eventID = params[8];
         String eventOwner = params[9];
+         tags = params[10];
 
 
         HTTP_Methods http_methods = new HTTP_Methods();
-        String parameters = ("eventname="+eventName+"&eventdate="+eventDate+"&eventstarttime="+eventStartTime+"&eventfinishtime="+eventFinishTime+"&eventaddress="+eventAddress+"&eventdescription="+eventDescription+"&eventimage="+eventImage+"&username="+username+"&eventowner="+eventOwner+"&eventid="+eventID);
+        String parameters = null;
+        try {
+            parameters = ("eventname="+eventName+"&eventdate="+eventDate+"&eventstarttime="+eventStartTime+"&eventfinishtime="+eventFinishTime+"&eventaddress="+eventAddress+"&eventdescription="+ URLEncoder.encode(eventDescription,"UTF-8")+"&eventimage="+eventImage+"&username="+username+"&eventowner="+eventOwner+"&eventid="+eventID+"&tags="+tags);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
         String response = http_methods.POST(url, parameters);
         return response.replace("\n", "");
@@ -69,7 +79,7 @@ public class PostWatchedEvents extends AsyncTask<String, Void, String> {
         if (s != null) {
             if (s.equalsIgnoreCase("Successful")) {
                 PutBehaviouralUserProfile updateUserProfile = new PutBehaviouralUserProfile(context);
-                updateUserProfile.execute(new String[]{eventDescription, username});
+                updateUserProfile.execute(new String[]{eventDescription, username, tags});
             } else {
                 Toast.makeText(context, "There has been a problem", Toast.LENGTH_SHORT).show();
             }

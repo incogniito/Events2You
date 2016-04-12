@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -18,7 +19,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class HTTP_Methods {
 
-    String ip = "http://172.21.5.130:8080/Events2You_API/API";
+    String ip = "http://172.21.5.12:8080/Events2You_API/API";
 
     public String GET(String desiredUrl) {
         try {

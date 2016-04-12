@@ -116,6 +116,9 @@ public class GetEventsByID extends AsyncTask<String, Void, EventsFactory> {
                         } else if (tag.equalsIgnoreCase("eventDescription"))
                         {
                             events.setEventDescription(text.trim());
+                        } else if (tag.equalsIgnoreCase("tags"))
+                        {
+                            events.setTags(text.trim());
                         } else if (tag.equalsIgnoreCase("eventFinishTime"))
                         {
                             DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");

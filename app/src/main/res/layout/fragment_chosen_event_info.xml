@@ -62,10 +62,10 @@
         android:id="@+id/username_et"
         android:hint="Username"
         android:background="#00ffffff"
-        android:layout_below="@+id/showDescription_tv"
+        android:layout_below="@+id/showTags"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="10dp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -90,6 +90,19 @@
         android:background="#00ffffff"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Tags"
+        android:maxLines="100"
+        android:scrollbars="vertical"
+        android:id="@+id/showTags"
+        android:layout_below="@+id/showDescription_tv"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp" />
 
 </RelativeLayout>
     </ScrollView>

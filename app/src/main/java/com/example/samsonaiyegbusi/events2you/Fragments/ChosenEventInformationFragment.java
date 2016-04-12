@@ -45,6 +45,7 @@ public class ChosenEventInformationFragment extends Fragment implements View.OnC
     EditText EventDate;
 
     EditText Username;
+    TextView tags;
 
 
    static SessionManager userSession;
@@ -102,6 +103,10 @@ public class ChosenEventInformationFragment extends Fragment implements View.OnC
             e.printStackTrace();
         }
 
+        tags = (TextView) v.findViewById(R.id.showTags);
+        tags.setText(events.getTags());
+        tags.setFocusable(false);
+
         startTime = events.getEventStartTime();
         finishTime = events.getEventFinishTime();
         date = events.getEventDate();
@@ -153,9 +158,10 @@ public class ChosenEventInformationFragment extends Fragment implements View.OnC
         String eventImage = Base64.encodeToString(imageBytes, Base64.NO_WRAP + Base64.URL_SAFE);
         String eventID = event_ID;
         String eventOwner = Username.getText().toString();
+        String eventTags = tags.getText().toString();
 
         PostWatchedEvents watchEvent = new PostWatchedEvents(c);
-        watchEvent.execute(new String[]{eventName, eventDate, eventStartTime, eventFinishTime, eventAddress, eventDescription, eventImage, username, eventID, eventOwner});
+        watchEvent.execute(new String[]{eventName, eventDate, eventStartTime, eventFinishTime, eventAddress, eventDescription, eventImage, username, eventID, eventOwner, eventTags});
 
 
 

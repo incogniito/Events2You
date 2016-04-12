@@ -35,26 +35,13 @@
         android:src="@mipmap/save_icon"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="#00ffffff"
-        android:layout_marginBottom="50dp" />
+        android:background="#00ffffff" />
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/linearLayout2"
-        android:layout_above="@+id/preview_save_ib">
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/preview_save_ib"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:id="@+id/linearLayout8">
-
-        </LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout2">
 
         <LinearLayout
             android:orientation="vertical"
@@ -152,8 +139,33 @@
         </LinearLayout>
 
         <EditText
-            android:layout_width="fill_parent"
+            android:layout_width="123dp"
             android:layout_height="40dp"
+            android:textColorHint="#96ffffff"
+            android:textColor="#ffffff"
+            android:inputType="date"
+            android:ems="10"
+            android:id="@+id/previewGenre"
+            android:background="#00ffffff"
+            android:hint="Category" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="#96ffffff"
+            android:textColor="#ffffff"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:id="@+id/preview_tags"
+            android:hint="Tags"
+            android:background="#00ffffff"
+            android:layout_below="@+id/linearLayout10"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:textColorHint="#96ffffff"
             android:textColor="#ffffff"
             android:inputType="textMultiLine"
@@ -164,6 +176,7 @@
             android:layout_below="@+id/linearLayout10"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
+
     </LinearLayout>
 
 </RelativeLayout>

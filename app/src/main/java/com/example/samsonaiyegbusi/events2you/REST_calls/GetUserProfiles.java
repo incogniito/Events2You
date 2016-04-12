@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 
 import com.example.samsonaiyegbusi.events2you.MainUI.ChooseInterestPage;
+import com.example.samsonaiyegbusi.events2you.MainUI.RecommenderPage;
 import com.example.samsonaiyegbusi.events2you.SessionManager;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -71,6 +72,9 @@ public class GetUserProfiles extends AsyncTask<String, Void, String> {
 
                 session = new SessionManager(context);
                 session.addProfiles(strings);
+                Intent takeUserToRecommender = new Intent(context, RecommenderPage.class);
+                context.startActivity(takeUserToRecommender);
+
             }else {
                 Intent addInterests = new Intent(context, ChooseInterestPage.class);
                 context.startActivity(addInterests);

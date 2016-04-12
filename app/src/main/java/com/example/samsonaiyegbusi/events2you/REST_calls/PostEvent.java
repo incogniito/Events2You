@@ -51,10 +51,11 @@ public class PostEvent extends AsyncTask<String, Void, String> {
         String eventDescription = params[5];
         String eventImage = params[6];
         String username = params[7];
-
+        String genre = params[8];
+        String tags = params[9];
 
         HTTP_Methods http_methods = new HTTP_Methods();
-        String parameters = ("eventname="+eventName+"&eventdate="+eventDate+"&eventstarttime="+eventStartTime+"&eventfinishtime="+eventFinishTime+"&eventaddress="+eventAddress+"&eventdescription="+eventDescription+"&eventimage="+eventImage+"&username="+username);
+        String parameters = ("eventname="+eventName+"&eventdate="+eventDate+"&eventstarttime="+eventStartTime+"&eventfinishtime="+eventFinishTime+"&eventaddress="+eventAddress+"&eventdescription="+eventDescription+"&eventimage="+eventImage+"&username="+username+"&genre="+genre+"&tags="+tags);
 
         String response = http_methods.POST(url, parameters);
         return response.replace("\n", "");

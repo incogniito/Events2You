@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import com.example.samsonaiyegbusi.events2you.Initialiser;
 import com.example.samsonaiyegbusi.events2you.R;
+import com.example.samsonaiyegbusi.events2you.REST_calls.GetEventTagSuggestions;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
@@ -143,7 +144,7 @@ public class AddEventPage extends AppCompatActivity implements Initialiser {
 
                 //check every field as an entry
                 if (uploadImage.getDrawable() == null){
-                    Toast.makeText(AddEventPage.this, "Please click the ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddEventPage.this, "Please choose an Image ", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 else if (event_name.length() == 0) {
@@ -160,11 +161,8 @@ public class AddEventPage extends AppCompatActivity implements Initialiser {
 
                 getDetails();
                 getImage();
-                Intent takeUserHome = new Intent(AddEventPage.this, FindAddressPage.class);
-                takeUserHome.putExtras(bundle);
-                startActivity(takeUserHome);
-
-
+                GetEventTagSuggestions suggestions = new GetEventTagSuggestions(this, bundle);
+                suggestions.execute(new String[]{});
         }
     }
 
