@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.example.samsonaiyegbusi.events2you.MainUI.Homepage;
+import com.example.samsonaiyegbusi.events2you.MainUI.WatchList;
 import com.example.samsonaiyegbusi.events2you.SessionManager;
 
 /**
@@ -16,7 +17,7 @@ import com.example.samsonaiyegbusi.events2you.SessionManager;
  */
 public class DeleteWatchEvent extends AsyncTask<String, Void, String> {
 
-    String url = "/watchedEvents/remove?";
+    String url = "/watchedevents/remove?";
     String username;
 
     ProgressDialog progressDialog;
@@ -67,7 +68,7 @@ public class DeleteWatchEvent extends AsyncTask<String, Void, String> {
             if (s.equalsIgnoreCase("Successful")) {
                 loginSession.createLoginSession(username);
                 Toast.makeText(context, "Event has been removed", Toast.LENGTH_SHORT);
-                Intent takeUserToHome = new Intent(context, Homepage.class);
+                Intent takeUserToHome = new Intent(context, WatchList.class);
                 takeUserToHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 context.startActivity(takeUserToHome);
             } else {

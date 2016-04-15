@@ -58,7 +58,7 @@ public class EventImagesAdapter extends BaseAdapter{
 
     @Override
     public int getCount() {
-        return events.size();
+       return events.size();
     }
 
     @Override

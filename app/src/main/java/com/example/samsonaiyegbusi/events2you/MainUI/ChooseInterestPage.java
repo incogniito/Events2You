@@ -1,8 +1,10 @@
 package com.example.samsonaiyegbusi.events2you.MainUI;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -79,6 +81,10 @@ public class ChooseInterestPage extends AppCompatActivity implements Initialiser
                 postInterests.execute(new String[]{interests, username});
 
                 break;
+
+            case R.id.interestList_tv:
+                RemoveInterestDialog();
+                break;
         }
             }
 
@@ -106,7 +112,7 @@ public class ChooseInterestPage extends AppCompatActivity implements Initialiser
         recommendEvents_ib = (ImageButton) findViewById(R.id.recommend_events_ib);
         recommendEvents_ib.setOnClickListener(this);
         interestList_tv = (TextView) findViewById(R.id.interestList_tv);
-
+        interestList_tv.setOnClickListener(this);
     }
 
     public void populateInterestSearch()
@@ -130,5 +136,45 @@ public class ChooseInterestPage extends AppCompatActivity implements Initialiser
             }
         }
         interestList_tv.setText(sb.toString());
+    }
+
+    private void RemoveInterestDialog()
+    {
+        final CharSequence[] items = chosenInterests.toArray(new CharSequence[chosenInterests.size()]);
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Choose Tag to Remove");
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //close tag
+                dialogInterface.dismiss();
+            }
+        });
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                chosenInterests.remove(item);
+
+                StringBuilder sb = new StringBuilder();
+                for (String str: chosenInterests)
+                {
+                    sb.append(str);
+                    if (str != chosenInterests.get(chosenInterests.size() - 1))
+                    {
+                        sb.append(", ");
+                    }
+                }
+                if(chosenInterests.isEmpty())
+                {
+                    interestList_tv.setText("No Interests Chosen");
+                }
+                else{interestList_tv.setText(sb.toString());}
+
+
+            }
+        });
+        builder.show();
+
     }
 }

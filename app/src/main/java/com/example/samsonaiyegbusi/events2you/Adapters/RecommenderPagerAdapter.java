@@ -43,7 +43,21 @@ public class RecommenderPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
 
         switch(position){
-            default: return "Because you like " + genre.get(position).toString();
+
+            default:
+                String friends = "";
+                if (genre.get(position).length()>6) {
+                     friends = genre.get(position).toString().substring(0, 7);
+                }
+                if (friends.equalsIgnoreCase("friend:"))
+                {
+                    String friendname = genre.get(position).toString().substring(7, genre.get(position).length());
+                    return "Because you are friends with " + friendname;
+
+                }else {
+                    return "Because you like " + genre.get(position).toString();
+
+                }
         }
     }
 }

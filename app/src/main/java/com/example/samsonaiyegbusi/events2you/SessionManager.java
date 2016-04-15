@@ -135,8 +135,6 @@ public class SessionManager  {
                     context.startActivity(takeUserToChooseFriends);
                 } else{
                     Intent takeUserToRecommender = new Intent(context, RecommenderPage.class);
-                    takeUserToRecommender.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK  | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
                     context.startActivity(takeUserToRecommender);
                 }
             }

@@ -84,9 +84,6 @@ public class FilterFriendsPage extends AppCompatActivity implements Initialiser 
                     startActivity(takeUserToRecommender);
                 }
 
-
-
-
                 break;
 
             case R.id.addFriends:

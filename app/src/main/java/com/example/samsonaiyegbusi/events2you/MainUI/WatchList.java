@@ -142,6 +142,7 @@ public class WatchList extends AppCompatActivity implements Initialiser, Adapter
 
             }
         });
+        builder.show();
 
 
 

@@ -43,7 +43,7 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
 
     SessionManager mainSession;
 
-    String[] menu = {"Add Event","Friends"," Change Interests", "Logout"};
+    String[] menu = {"Add Event","Friends","Change Interests", "Logout"};
     private ListView menuDrawerList;
     private ArrayAdapter<String> menuAdapter;
 
@@ -157,7 +157,6 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
         menuDrawerList.setOnItemClickListener(this);
 
         calendar_ib = (ImageButton) findViewById(R.id.calendar_ib);
-        events_ib = (ImageButton) findViewById(R.id.events_ib);
         watch_list_ib = (ImageButton) findViewById(R.id.watch_list_ib);
         search_ib = (ImageButton) findViewById(R.id.search_ib);
         recommender_ib = (ImageButton) findViewById(R.id.recommended_ib);
@@ -173,7 +172,6 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
 
 
         calendar_ib.setOnClickListener(this);
-        events_ib.setOnClickListener(this);
         watch_list_ib.setOnClickListener(this);
         search_ib.setOnClickListener(this);
         recommender_ib.setOnClickListener(this);
@@ -196,7 +194,7 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
         }else if (menu[position].equalsIgnoreCase("Friends"))
         {
             friendsItem();
-        } else if (menu[position].equalsIgnoreCase("Friends"))
+        } else if (menu[position].equalsIgnoreCase("Change Interests"))
         {
             Intent addEventProcess = new Intent(Homepage.this, ChooseInterestPage.class);
             startActivity(addEventProcess);
@@ -271,6 +269,6 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
 
             }
         });
-
+builder.show();
     }
 }

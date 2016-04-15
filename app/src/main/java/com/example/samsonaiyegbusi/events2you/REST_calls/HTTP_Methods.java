@@ -29,9 +29,7 @@ public class HTTP_Methods {
             HttpURLConnection connect2Rest = (HttpURLConnection) url.openConnection();
 
 
-            if (connect2Rest.getResponseCode() != 200) {
-                throw new IOException(connect2Rest.getResponseMessage());
-            }
+            int responseCode = connect2Rest.getResponseCode();
 
             BufferedReader is = new BufferedReader(new InputStreamReader(connect2Rest.getInputStream()));
             String inString;
@@ -41,6 +39,7 @@ public class HTTP_Methods {
             }
 
             String xml = sb.toString();
+            System.out.print(responseCode);
 
             return xml;
 
@@ -173,7 +172,7 @@ public class HTTP_Methods {
     {
 
         try {
-            URL Url = new URL(url );
+            URL Url = new URL(ip +url );
 
 
             HttpURLConnection connect2Rest = (HttpURLConnection) Url.openConnection();

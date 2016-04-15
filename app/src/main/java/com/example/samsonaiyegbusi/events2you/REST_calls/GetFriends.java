@@ -79,7 +79,7 @@ public class GetFriends extends AsyncTask<String, Void, String> {
             context.startActivity(takeUserToHome);
 
 
-        }else {
+        }else if (s == null){
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setMessage("Our servers are down at the moment, we deeply apologise for this inconvenience");
             builder.setTitle("Sorry");
