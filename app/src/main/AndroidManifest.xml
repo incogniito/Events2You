@@ -23,6 +23,7 @@
             android:name=".MainUI.Homepage"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -88,7 +89,21 @@
         <activity
             android:name=".MainUI.CategoriseEventPage"
             android:label="@string/title_activity_categorise_event_page"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-    </application>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MainUI.FilterFriendsPage"
+            android:label="@string/title_activity_filter_friends_page"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MainUI.SearchPage"
+            android:label="@string/title_activity_search_page"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MainUI.CalendarPage"
+            android:label="@string/title_activity_calendar_page"
+            android:theme="@style/AppTheme.NoActionBar" />  <activity
+        android:name=".MainUI.Calendaar"
+        android:label="@string/title_activity_calendaar"
+        android:theme="@style/AppTheme.NoActionBar"></activity>  </application>
 
 </manifest>

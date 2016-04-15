@@ -52,7 +52,7 @@ public class GetWatchListEventsByUsername extends AsyncTask<String, Void, List<E
                 dialog.dismiss();
             }
         });
-        progressDialog.show();
+//        progressDialog.show();
     }
 
     @Override
@@ -117,6 +117,67 @@ public class GetWatchListEventsByUsername extends AsyncTask<String, Void, List<E
                         } else if (tag.equalsIgnoreCase("stringEventID"))
                         {
                             events.setEventID(text);
+                        }else if (tag.equalsIgnoreCase("eventDate"))
+                        {
+                            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+                            DateFormat newdf = new SimpleDateFormat("EEE, d MMM yyyy");
+
+                            Date date = null;
+
+                            if (text.length() == 25)
+                            {
+                                String newDate = text.substring(0,19);
+                                try {
+                                    date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(newDate);
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                            }else {
+                                try {
+                                    date = df.parse(text);
+
+                                } catch (ParseException e) {
+
+                                    try {
+                                        date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(text);
+                                    } catch (ParseException e1) {
+                                        try {
+                                            date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(text);
+                                        } catch (ParseException e2) {
+                                            e2.printStackTrace();
+                                        }
+                                        e1.printStackTrace();
+
+
+                                    }
+
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            events.setEventDate(newdf.format(date));
+                        }else if (tag.equalsIgnoreCase("eventStartTime"))
+                        {
+                            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+                            DateFormat tdf = new SimpleDateFormat("HH:mm");
+                            Date startTime = null;
+                            try {
+                                startTime = df.parse(text);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            events.setEventStartTime(tdf.format(startTime));
+                        }else if (tag.equalsIgnoreCase("eventFinishTime"))
+                        {
+                            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+                            DateFormat tdf = new SimpleDateFormat("HH:mm");
+                            Date finishTime = null;
+                            try {
+                                finishTime = df.parse(text);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            events.setEventFinishTime(tdf.format(finishTime));
                         }
                         break;
                 }
@@ -133,7 +194,7 @@ public class GetWatchListEventsByUsername extends AsyncTask<String, Void, List<E
 
     @Override
     protected void onPostExecute(List<EventsFactory> strings) {
-        progressDialog.dismiss();
+    //    progressDialog.dismiss();
         if (strings == null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setMessage("Our servers are down at the moment, we deeply apologise for this inconvenience");

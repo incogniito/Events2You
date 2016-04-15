@@ -10,6 +10,7 @@ import android.view.View;
 import com.example.samsonaiyegbusi.events2you.GettersAndSetters.EventsFactory;
 import com.example.samsonaiyegbusi.events2you.MainUI.AddFriendsPage;
 import com.example.samsonaiyegbusi.events2you.MainUI.ChooseInterestPage;
+import com.example.samsonaiyegbusi.events2you.MainUI.FilterFriendsPage;
 import com.example.samsonaiyegbusi.events2you.MainUI.LoginPage;
 import com.example.samsonaiyegbusi.events2you.MainUI.RecommenderPage;
 import com.example.samsonaiyegbusi.events2you.REST_calls.GetRecommendedEventsOnFriends;
@@ -129,11 +130,13 @@ public class SessionManager  {
                     Bundle bundle = new Bundle();
                     bundle.putBoolean("friendsRecommender", false);
                     bundle.putStringArrayList("friends",friendsList);
-                    Intent takeUserToChooseFriends = new Intent(context, AddFriendsPage.class);
+                    Intent takeUserToChooseFriends = new Intent(context, FilterFriendsPage.class);
                     takeUserToChooseFriends.putExtras(bundle);
                     context.startActivity(takeUserToChooseFriends);
                 } else{
                     Intent takeUserToRecommender = new Intent(context, RecommenderPage.class);
+                    takeUserToRecommender.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK  | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
                     context.startActivity(takeUserToRecommender);
                 }
             }

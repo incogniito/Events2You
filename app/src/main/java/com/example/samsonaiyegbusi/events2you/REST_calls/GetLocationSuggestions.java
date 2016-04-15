@@ -4,7 +4,11 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
+
+import com.example.samsonaiyegbusi.events2you.MainUI.CategoriseEventPage;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -12,24 +16,24 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
 import java.io.StringReader;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by samsonaiyegbusi on 13/03/16.
  */
-public class GetGenreList extends AsyncTask<String, Void, List<String>> {
+public class GetLocationSuggestions extends AsyncTask<String, Void, List<String>> {
 
-    String url = "/category";
-    List<String> genreList;
+    String url = "/interestsuggestions/locations";
+    List<String> suggestions;
 
     String text;
 
     ProgressDialog progressDialog;
     Context context;
 
-    public GetGenreList(Context context)
+
+    public GetLocationSuggestions(Context context)
     {
         this.context = context;
     }
@@ -37,7 +41,7 @@ public class GetGenreList extends AsyncTask<String, Void, List<String>> {
     @Override
     protected void onPreExecute() {
         progressDialog = new ProgressDialog(context);
-        progressDialog.setTitle("Retrieving Category list");
+        progressDialog.setTitle("Retrieving Suggestions");
         progressDialog.setMessage("Please Wait...");
         progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
             @Override
@@ -60,7 +64,7 @@ public class GetGenreList extends AsyncTask<String, Void, List<String>> {
     public  List<String> parseXML(String xml)
     {
         XmlPullParserFactory factory;
-        genreList = new ArrayList();
+        suggestions = new ArrayList();
 
         try {
             factory = XmlPullParserFactory.newInstance();
@@ -89,16 +93,16 @@ public class GetGenreList extends AsyncTask<String, Void, List<String>> {
 
                     case XmlPullParser.END_TAG:
 
-                        if (tag.equalsIgnoreCase("category"))
+                        if (tag.equalsIgnoreCase("suggestion"))
                         {
-                            genreList.add(text);
+                            suggestions.add(text);
                         }
 
                         break;
                 }
                 eventType = parser.next();
             }
-            return genreList;
+            return suggestions;
         } catch (XmlPullParserException e) {
             e.printStackTrace();
         } catch (IOException e) {

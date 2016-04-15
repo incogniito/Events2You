@@ -115,7 +115,9 @@ public class GetEventsByID extends AsyncTask<String, Void, EventsFactory> {
                             events.setEventAddress(text);
                         } else if (tag.equalsIgnoreCase("eventDescription"))
                         {
-                            events.setEventDescription(text.trim());
+                            if (text!= null) {
+                                events.setEventDescription(text.trim());
+                            }
                         } else if (tag.equalsIgnoreCase("tags"))
                         {
                             events.setTags(text.trim());
@@ -150,20 +152,36 @@ public class GetEventsByID extends AsyncTask<String, Void, EventsFactory> {
                             DateFormat newdf = new SimpleDateFormat("EEE, d MMM yyyy");
 
                             Date date = null;
-                            try {
-                                date = df .parse(text);
-                                if (date == null)
-                                {
-                                }
-                            } catch (ParseException e) {
 
+                            if (text.length() == 25)
+                            {
+                                String newDate = text.substring(0,19);
                                 try {
-                                    date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(text);
-                                } catch (ParseException e1) {
-                                    e1.printStackTrace();
+                                    date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(newDate);
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
                                 }
+                            }else {
+                                try {
+                                    date = df.parse(text);
 
-                                e.printStackTrace();
+                                } catch (ParseException e) {
+
+                                    try {
+                                        date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(text);
+                                    } catch (ParseException e1) {
+                                        try {
+                                            date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(text);
+                                        } catch (ParseException e2) {
+                                            e2.printStackTrace();
+                                        }
+                                        e1.printStackTrace();
+
+
+                                    }
+
+                                    e.printStackTrace();
+                                }
                             }
 
                             events.setEventDate(newdf.format(date));

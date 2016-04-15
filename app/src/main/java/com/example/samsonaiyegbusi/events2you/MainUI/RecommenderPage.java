@@ -1,5 +1,6 @@
 package com.example.samsonaiyegbusi.events2you.MainUI;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -57,7 +58,28 @@ public class RecommenderPage extends AppCompatActivity implements Initialiser{
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.rc_calendar_ib:
 
+                Intent showCalendar = new Intent(v.getContext(), CalendarPage.class);
+                startActivity(showCalendar);
+                break;
+
+            case R.id.rc_events_ib:
+
+                Intent takeUserToRecommender = new Intent(RecommenderPage.this, Homepage.class);
+                startActivity(takeUserToRecommender);
+
+                break;
+
+            case R.id.rc_watchlist_ib:
+
+                Intent takeUserToCalendar = new Intent(RecommenderPage.this, WatchList.class);
+                startActivity(takeUserToCalendar);
+
+                break;
+
+        }
     }
 
     @Override
@@ -113,7 +135,11 @@ public class RecommenderPage extends AppCompatActivity implements Initialiser{
                 GetRecommendedEventsOnFriends recommendedEventsOnFriends = new GetRecommendedEventsOnFriends(this);
 
                 try {
-                   recommended.addAll(recommendedEventsOnFriends.execute(new String[]{username, friend, profiles }).get());
+                    List<EventsFactory> eventsOnFriends = recommendedEventsOnFriends.execute(new String[]{username, friend, profiles }).get();
+
+                    if (eventsOnFriends != null) {
+                        recommended.addAll(eventsOnFriends);
+                    }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {

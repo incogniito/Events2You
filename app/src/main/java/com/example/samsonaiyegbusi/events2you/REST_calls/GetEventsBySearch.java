@@ -5,6 +5,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
+import android.util.Base64;
+
+import com.example.samsonaiyegbusi.events2you.GettersAndSetters.EventsFactory;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -12,24 +15,24 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
 import java.io.StringReader;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by samsonaiyegbusi on 13/03/16.
  */
-public class GetGenreList extends AsyncTask<String, Void, List<String>> {
+public class GetEventsBySearch extends AsyncTask<String, Void, List<EventsFactory>> {
 
-    String url = "/category";
-    List<String> genreList;
+    String url = "/events/search?";
+    List<EventsFactory> eventsList;
+    EventsFactory events;
 
     String text;
 
     ProgressDialog progressDialog;
     Context context;
 
-    public GetGenreList(Context context)
+    public GetEventsBySearch(Context context)
     {
         this.context = context;
     }
@@ -37,7 +40,7 @@ public class GetGenreList extends AsyncTask<String, Void, List<String>> {
     @Override
     protected void onPreExecute() {
         progressDialog = new ProgressDialog(context);
-        progressDialog.setTitle("Retrieving Category list");
+        progressDialog.setTitle("Retrieving events");
         progressDialog.setMessage("Please Wait...");
         progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
             @Override
@@ -48,19 +51,25 @@ public class GetGenreList extends AsyncTask<String, Void, List<String>> {
         progressDialog.show();    }
 
     @Override
-    protected List<String> doInBackground(String... params) {
+    protected List<EventsFactory> doInBackground(String... params) {
+
+        String phrase = params[0];
+        String location = params[1];
+        String range = params[2];
+
+        String parameters = "phrase="+phrase.replace(" ", "+")+"&location="+location+"&range="+range;
 
         HTTP_Methods http_methods = new HTTP_Methods();
-        String response = http_methods.GET(url);
+        String response = http_methods.GET(url + parameters);
 
         return parseXML(response);
 
     }
 
-    public  List<String> parseXML(String xml)
+    public  List<EventsFactory> parseXML(String xml)
     {
         XmlPullParserFactory factory;
-        genreList = new ArrayList();
+        eventsList = new ArrayList();
 
         try {
             factory = XmlPullParserFactory.newInstance();
@@ -81,7 +90,10 @@ public class GetGenreList extends AsyncTask<String, Void, List<String>> {
                 switch(eventType)
                 {
                     case XmlPullParser.START_TAG:
-
+                        if (tag.equalsIgnoreCase("events"))
+                        {
+                            events = new EventsFactory();
+                        }
                     case XmlPullParser.TEXT:
 
                         text = parser.getText();
@@ -89,16 +101,27 @@ public class GetGenreList extends AsyncTask<String, Void, List<String>> {
 
                     case XmlPullParser.END_TAG:
 
-                        if (tag.equalsIgnoreCase("category"))
+                        if (tag.equalsIgnoreCase("eventID"))
                         {
-                            genreList.add(text);
-                        }
+                            events.setEventID(text);
+                        } else if (tag.equalsIgnoreCase("eventImage"))
+                        {
+                            byte[] eventImage = Base64.decode(text, Base64.DEFAULT);
 
+                            events.setEventImage(eventImage);
+                        } else if (tag.equalsIgnoreCase("eventName"))
+                        {
+                            events.setEventName(text);
+                            eventsList.add(events);
+                        } else if (tag.equalsIgnoreCase("stringEventID"))
+                    {
+                        events.setEventID(text);
+                    }
                         break;
                 }
                 eventType = parser.next();
             }
-            return genreList;
+            return eventsList;
         } catch (XmlPullParserException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -108,7 +131,7 @@ public class GetGenreList extends AsyncTask<String, Void, List<String>> {
     }
 
     @Override
-    protected void onPostExecute(List<String> strings) {
+    protected void onPostExecute(List<EventsFactory> strings) {
         progressDialog.dismiss();
         if (strings == null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -123,6 +146,19 @@ public class GetGenreList extends AsyncTask<String, Void, List<String>> {
             });
             AlertDialog dialog = builder.create();
             dialog.show();
+        }else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setMessage("No results found");
+            builder.setTitle("Sorry");
+            builder.setPositiveButton("Search Again", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    //close tag
+                    dialogInterface.dismiss();
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
         }
-        }
+    }
 }

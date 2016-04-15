@@ -12,7 +12,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_homepage"
     tools:context=".MainUI.Homepage"
-    android:background="@mipmap/app_default_background">
+    android:background="@mipmap/app_default_background_menu">
 
 
     <android.support.v4.widget.DrawerLayout
@@ -59,17 +59,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/ButtonsHolder"
         android:weightSum="1"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="30dp">
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/events_ib"
-            android:src="@mipmap/events_icon"
-            android:background="#00ffffff" />
+        android:layout_centerHorizontal="true">
 
         <ImageButton
             android:layout_width="wrap_content"

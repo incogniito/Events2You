@@ -119,7 +119,7 @@ public class GetRecommendedEvents extends AsyncTask<String, Void, List<EventsFac
                         } else if (tag.equalsIgnoreCase("stringEventID"))
                         {
                             events.setEventID(text);
-                        }else if (tag.equalsIgnoreCase("genre"))
+                        }else if (tag.equalsIgnoreCase("category"))
                         {
                             events.setEventGenre(
                                     text);

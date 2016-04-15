@@ -24,11 +24,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        switch(position)
-        {
-            default:  return GenreFragment.create(position+1, genre.get(position).toString());
-
-        }
+          return GenreFragment.create(position+1, genre.get(position).toString(), 1);
 
     }
 

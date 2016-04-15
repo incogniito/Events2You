@@ -33,15 +33,25 @@ public class GenreFragment extends ListFragment {
     public static final String ARG_PAGE = "ARG_PAGE";
     private String genre;
     public ImageView imageView;
-    private static List<EventsFactory> Events;
-
+      List<EventsFactory> Events = null;
+    int functionID;
 
     Bundle bundle;
 
+    public GenreFragment( List<EventsFactory> events)
+    {
+        Events = events;
 
-    public static GenreFragment create(int page, String genre){
+    }
+
+    public GenreFragment( )
+    {
+
+    }
+
+    public static GenreFragment create(int page, String genre, int functionID){
         Bundle args = new Bundle();
-
+        args.putInt("functionID",functionID);
         args.putInt(ARG_PAGE, page);
         args.putString("Genre", genre);
         GenreFragment genreFragment = new GenreFragment();
@@ -51,19 +61,20 @@ public class GenreFragment extends ListFragment {
 
     public static GenreFragment create(int page, String genre, List<EventsFactory> events){
         Bundle args = new Bundle();
-        Events = events;
         args.putInt(ARG_PAGE, page);
         args.putString("Genre", genre);
-        GenreFragment genreFragment = new GenreFragment();
+        GenreFragment genreFragment = new GenreFragment(events);
         genreFragment.setArguments(args);
         return genreFragment;
     }
+
 
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         genre = getArguments().getString("Genre");
+        functionID = getArguments().getInt("functionID",functionID);
         bundle = new Bundle();
         this.setRetainInstance(true);
     }
@@ -72,7 +83,7 @@ public class GenreFragment extends ListFragment {
    public View onCreateView(LayoutInflater inflator, ViewGroup container, Bundle savedInstanceState ) {
        View rootView = inflator.inflate(R.layout.fragment_event_image_list, container, false);
 
-       if (Events==null) {
+       if (functionID==1) {
 
            eventImagesAdapter = new EventImagesAdapter(getActivity(), genre);
        } else{

@@ -17,4 +17,12 @@
     <string name="title_activity_choose_interest_page">ChooseInterestPage</string>
     <string name="title_activity_add_friends_page">AddFriendsPage</string>
     <string name="title_activity_categorise_event_page">CategoriseEventPage</string>
+    <string name="title_activity_filter_friends_page">FilterFriendsPage</string>
+    <string name="title_activity_search_page">SearchPage</string>
+    <string name="title_activity_calendar_page">CalendarPage</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_calendaar">Calendaar</string>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 </resources>

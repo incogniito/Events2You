@@ -15,7 +15,7 @@
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:id="@+id/removefriend_ib"
-        android:src="@mipmap/add_icon"
+        android:src="@mipmap/minus_icon"
         android:background="#00ffffff"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"

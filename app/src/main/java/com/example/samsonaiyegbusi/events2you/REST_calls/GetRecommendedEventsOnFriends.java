@@ -116,7 +116,7 @@ public class GetRecommendedEventsOnFriends extends AsyncTask<String, Void, List<
                         } else if (tag.equalsIgnoreCase("stringEventID"))
                         {
                             events.setEventID(text);
-                        }else if (tag.equalsIgnoreCase("genre"))
+                        }else if (tag.equalsIgnoreCase("category"))
                         {
                             events.setEventGenre(
                                     text);

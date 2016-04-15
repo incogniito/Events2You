@@ -49,6 +49,12 @@ public class EventImagesAdapter extends BaseAdapter{
         }
     }
 
+    public EventImagesAdapter(Context context, List<EventsFactory> events){
+
+        this.context = context;
+        this.events = events;
+    }
+
 
     @Override
     public int getCount() {
