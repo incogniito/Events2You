@@ -62,4 +62,17 @@
             android:background="#00ffffff" />
 
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/textView13"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="86dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="20dp"
+        android:textColor="#ffffff" />
 </RelativeLayout>

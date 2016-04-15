@@ -36,7 +36,6 @@ import java.util.TimeZone;
 
 public class CalendarPage extends AppCompatActivity implements Initialiser {
 
-    ImageButton calendar_ib;
     ImageButton events_ib;
     ImageButton recommender_ib;
     ImageButton watch_list_ib;
@@ -78,7 +77,7 @@ public class CalendarPage extends AppCompatActivity implements Initialiser {
 
             case R.id.watch_list_ib:
 
-                Intent takeUserToCalendar = new Intent(CalendarPage.this, CalendarPage.class);
+                Intent takeUserToCalendar = new Intent(CalendarPage.this, WatchList.class);
                 startActivity(takeUserToCalendar);
 
                 break;
@@ -113,7 +112,6 @@ public class CalendarPage extends AppCompatActivity implements Initialiser {
     @Override
     public void widgetInitialiser() {
 
-        calendar_ib = (ImageButton) findViewById(R.id.calendar_ib);
         events_ib = (ImageButton) findViewById(R.id.events_ib);
         recommender_ib = (ImageButton) findViewById(R.id.recommended_ib);
         watch_list_ib = (ImageButton) findViewById(R.id.watch_list_ib);
@@ -123,7 +121,6 @@ public class CalendarPage extends AppCompatActivity implements Initialiser {
         calView = (CalendarView) findViewById(R.id.calendarView2);
 
 
-        calendar_ib.setOnClickListener(this);
 
         events_ib.setOnClickListener(this);
 
@@ -160,8 +157,7 @@ public class CalendarPage extends AppCompatActivity implements Initialiser {
 
         if (!calEvents.isEmpty())
         {
-            CalendarAdapter calendarAdapter = new CalendarAdapter(CalendarPage.this,calEvents);
-            eventList_date.setAdapter(calendarAdapter);
+            eventList_date.setAdapter(new CalendarAdapter(CalendarPage.this,calEvents));
         }
 
 
@@ -176,7 +172,6 @@ public class CalendarPage extends AppCompatActivity implements Initialiser {
                 Date date2 = cal2.getTime();
                 String chosenDate2 = sdf.format(date2);
                 List<EventsFactory> calEvents2 = new ArrayList();
-                CalendarAdapter calendarAdapter = new CalendarAdapter(CalendarPage.this, calEvents2);
                 for (EventsFactory event : watchEvents) {
                     if (event.getEventDate().equalsIgnoreCase(chosenDate2)) {
 
@@ -186,11 +181,11 @@ public class CalendarPage extends AppCompatActivity implements Initialiser {
 
                 if (!calEvents2.isEmpty()) {
 
-                    eventList_date.setAdapter(calendarAdapter);
+                    eventList_date.setAdapter(new CalendarAdapter(CalendarPage.this, calEvents2));
                 } else {
-                    CalendarAdapter calendarAdapter2 = new CalendarAdapter(CalendarPage.this, null);
+                  //  CalendarAdapter calendarAdapter2 = new CalendarAdapter(CalendarPage.this, null);
 
-                    eventList_date.setAdapter(calendarAdapter2);
+                 //   eventList_date.setAdapter(calendarAdapter2);
                 }
             }
 

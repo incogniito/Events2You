@@ -36,6 +36,7 @@ public class WatchList extends AppCompatActivity implements Initialiser, Adapter
     ImageButton Home_ib;
     ImageButton recommender_ib;
     ImageButton calendar_ib;
+    TextView textv13;
 
     SessionManager usersession;
 
@@ -90,7 +91,8 @@ public class WatchList extends AppCompatActivity implements Initialiser, Adapter
         watchlist_lv = (ListView) findViewById(R.id.watchlist_lv);
         watchlist_lv.setOnItemClickListener(this);
 
-
+        textv13 = (TextView) findViewById(R.id.textView13);
+        textv13.setVisibility(View.INVISIBLE);
         Home_ib = (ImageButton) findViewById(R.id.wl_home_ib);
         recommender_ib = (ImageButton) findViewById(R.id.wl_recommended_ib);
         calendar_ib = (ImageButton) findViewById(R.id.wl_calendar_ib);
@@ -105,6 +107,11 @@ public class WatchList extends AppCompatActivity implements Initialiser, Adapter
         GetWatchListEventsByUsername getwatchlist = new GetWatchListEventsByUsername(this);
         try {
             List<EventsFactory> watchlist = getwatchlist.execute(new String[]{username}).get();
+            if (watchlist.isEmpty())
+            {
+                textv13.setVisibility(View.VISIBLE);
+                textv13.setText("There are no events for you to watch");
+            }
             watchlist_lv.setAdapter(new WatchListAdapter(this, watchlist));
 
         } catch (InterruptedException e) {
@@ -143,9 +150,6 @@ public class WatchList extends AppCompatActivity implements Initialiser, Adapter
             }
         });
         builder.show();
-
-
-
     }
 
 

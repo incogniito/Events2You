@@ -14,6 +14,7 @@ import com.example.samsonaiyegbusi.events2you.MainUI.FilterFriendsPage;
 import com.example.samsonaiyegbusi.events2you.MainUI.LoginPage;
 import com.example.samsonaiyegbusi.events2you.MainUI.RecommenderPage;
 import com.example.samsonaiyegbusi.events2you.REST_calls.GetRecommendedEventsOnFriends;
+import com.example.samsonaiyegbusi.events2you.REST_calls.GetUpdatedUserProfiles;
 import com.example.samsonaiyegbusi.events2you.REST_calls.GetUserProfiles;
 
 
@@ -110,7 +111,11 @@ public class SessionManager  {
 
 
             context.startActivity(login);
+        }else{
+            GetUpdatedUserProfiles getUpdatedUserProfiles = new GetUpdatedUserProfiles(context);
+            getUpdatedUserProfiles.execute(new String[]{});
         }
+
 
     }
 

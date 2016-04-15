@@ -11,65 +11,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainUI.Calendaar"
     tools:showIn="@layout/activity_calendaar"
-    android:background="@mipmap/app_default_background">
+    android:background="@mipmap/background">
 
-    <CalendarView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/calendarView2"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/dailyView_lv"
-        android:background="#64ffffff" />
-
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/linearLayout8"
-        android:weightSum="1"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/events_ib"
-            android:src="@mipmap/events_icon"
-            android:background="#00ffffff" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/recommended_ib"
-            android:src="@mipmap/recommended"
-            android:background="#00ffffff" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/calendar_ib"
-            android:src="@mipmap/calendar_icon"
-            android:background="#00ffffff" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/watch_list_ib"
-            android:src="@mipmap/watch_list_icon"
-            android:background="#00ffffff" />
-    </LinearLayout>
-
-    <ListView
-        android:id="@+id/dailyView_lv"
-        android:layout_width="fill_parent"
-        android:layout_height="178dp"
-        android:layout_gravity="center_horizontal|center"
-        android:clickable="true"
-        android:focusable="true"
-        android:layout_alignRight="@+id/linearLayout8"
-        android:layout_alignEnd="@+id/linearLayout8"
-        android:layout_above="@+id/linearLayout8" />
 
 </RelativeLayout>

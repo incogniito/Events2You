@@ -68,11 +68,7 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
 
-        GetUpdatedUserProfiles getUpdatedUserProfiles = new GetUpdatedUserProfiles(this);
-        getUpdatedUserProfiles.execute(new String[]{});
 
         variableInitialiser();
         widgetInitialiser();

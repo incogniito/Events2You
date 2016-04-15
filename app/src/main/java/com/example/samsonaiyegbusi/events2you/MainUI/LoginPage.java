@@ -60,6 +60,12 @@ public class LoginPage extends AppCompatActivity implements Initialiser {
                 break;
             case R.id.login_ib:
                 v.startAnimation(animateButton);
+
+
+                if (username_et.getText().length() == 0 || password_et.getText().length() == 0) {
+                    Toast.makeText(LoginPage.this, "Please fill in Username/Password", Toast.LENGTH_SHORT).show();
+break;
+                }
                 loginButtonSetup();
                 break;
 
@@ -89,9 +95,6 @@ public class LoginPage extends AppCompatActivity implements Initialiser {
         String Username = username_et.getText().toString().trim();
         String Password = password_et.getText().toString().trim();
 
-        if (username_et.getText().length() == 0 || password_et.getText().length() == 0) {
-            Toast.makeText(LoginPage.this, "Please fill in Username/Password", Toast.LENGTH_SHORT).show();
-        }
 
         GetLoginStatus login = new GetLoginStatus(this);
         login.execute(new String[]{Username, Password});

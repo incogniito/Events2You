@@ -65,6 +65,8 @@ public class WatchListAdapter extends BaseAdapter {
 
         watchlist_ID_iv.setText(eventID);
         watchlist_tv.setText(eventName);
+
+
         return v;
     }
 }

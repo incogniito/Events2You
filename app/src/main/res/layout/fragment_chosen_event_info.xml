@@ -64,8 +64,7 @@
         android:background="#00ffffff"
         android:layout_below="@+id/showTags"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp" />
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="match_parent"
@@ -82,15 +81,6 @@
         android:layout_below="@+id/linearLayout7"
         android:layout_marginTop="20dp" />
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/watchevent_ib"
-        android:src="@mipmap/watch_icon"
-        android:background="#00ffffff"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true" />
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -103,6 +93,49 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="10dp" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="true"
+        android:id="@+id/j"
+        android:layout_below="@+id/username_et">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Share"
+            android:id="@+id/textView12"
+            android:layout_marginLeft="20dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageButton"
+                android:src="@mipmap/facebook_new"
+                android:background="#00ffffff"
+                android:layout_marginLeft="20dp" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/watchevent_ib"
+                android:src="@mipmap/watch_icon"
+                android:background="#00ffffff"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="50dp" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>
     </ScrollView>

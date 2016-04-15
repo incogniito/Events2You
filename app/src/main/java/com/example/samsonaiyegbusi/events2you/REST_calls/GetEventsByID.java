@@ -116,7 +116,7 @@ public class GetEventsByID extends AsyncTask<String, Void, EventsFactory> {
                         } else if (tag.equalsIgnoreCase("eventDescription"))
                         {
                             if (text!= null) {
-                                events.setEventDescription(text.trim());
+                                events.setEventDescription(text.trim().replace("&#39;",""));
                             }
                         } else if (tag.equalsIgnoreCase("tags"))
                         {

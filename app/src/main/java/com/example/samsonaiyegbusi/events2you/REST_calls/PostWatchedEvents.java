@@ -34,7 +34,7 @@ public class PostWatchedEvents extends AsyncTask<String, Void, String> {
     @Override
     protected void onPreExecute() {
         progressDialog = new ProgressDialog(context);
-        progressDialog.setTitle("Posting Your Event");
+        progressDialog.setTitle("Adding Event to Your Watch List");
         progressDialog.setMessage("Please Wait...");
         progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
             @Override

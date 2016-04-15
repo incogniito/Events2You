@@ -116,7 +116,13 @@ public class ChosenEventInformationFragment extends Fragment implements View.OnC
         EventName.setFocusable(false);
 
         EventDate = (EditText) v.findViewById(R.id.showDate_et);
-        EventDate.setText("Starts at " + startTime + " to " + finishTime + " On " + date);
+        if (finishTime == null)
+        {
+            EventDate.setText("Starts at " + startTime + " On " + date);
+        }else {
+            EventDate.setText("Starts at " + startTime + " to " + finishTime + " On " + date);
+
+        }
         EventDate.setFocusable(false);
 
         EventAddress = (EditText) v.findViewById(R.id.showAddress_et);

@@ -72,7 +72,7 @@ public class GetLoginStatus extends AsyncTask<String, Void, String> {
                 takeUserToHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 context.startActivity(takeUserToHome);
             } else {
-                Toast.makeText(context, "Invalid Username/Password", Toast.LENGTH_SHORT);
+                Toast.makeText(context, "Invalid Username/Password", Toast.LENGTH_SHORT).show();
             }
         }else {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
