@@ -128,7 +128,6 @@ session = new SessionManager(this);
         if (recommended != null) {
             final RecommenderPagerAdapter pgrAdapter = new RecommenderPagerAdapter(getSupportFragmentManager(), genre, recommended);
             viewPager.setAdapter(pgrAdapter);
-            session.addResponse("");
         }
     }
 }

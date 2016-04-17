@@ -25,7 +25,7 @@ public class XMLParser {
     {
 
        ProgressDialog progressDialog = new ProgressDialog(context);
-        progressDialog.setTitle("Creating Your User Profile");
+        progressDialog.setTitle("Loading");
         progressDialog.setMessage("Please Wait...");
         progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
             @Override
@@ -102,5 +102,60 @@ public class XMLParser {
         }
         return null;
     }
+
+    public  List<String> parseXMLforGenre(String xml)
+    {
+        XmlPullParserFactory factory;
+       List<String> genreList = new ArrayList();
+        String text = "";
+
+
+        try {
+            factory = XmlPullParserFactory.newInstance();
+
+            factory.setNamespaceAware(true);
+            XmlPullParser parser = factory.newPullParser();
+
+            if (xml == null)
+            {
+                return null;
+
+            }
+
+            parser.setInput( new StringReader( xml ) );
+            int eventType = parser.getEventType();
+            while (eventType != XmlPullParser.END_DOCUMENT) {
+                String tag = parser.getName();
+                switch(eventType)
+                {
+                    case XmlPullParser.START_TAG:
+
+                    case XmlPullParser.TEXT:
+
+                        text = parser.getText();
+                        break;
+
+                    case XmlPullParser.END_TAG:
+
+                        if (tag.equalsIgnoreCase("category"))
+                        {
+                            genreList.add(text);
+                        }
+
+                        break;
+                }
+                eventType = parser.next();
+            }
+            return genreList;
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
 
 }

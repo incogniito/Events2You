@@ -69,9 +69,8 @@ public class PostEvent extends AsyncTask<String, Void, String> {
 
             if (s.equalsIgnoreCase("Successful")) {
                 Toast.makeText(context, "You have successfully created an event", Toast.LENGTH_SHORT).show();
-                Intent takeUserToLogin = new Intent(context, Homepage.class);
-                takeUserToLogin.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                context.startActivity(takeUserToLogin);
+                GetEventsByGenre getEventsByGenre = new GetEventsByGenre(context);
+                getEventsByGenre.execute(new String[]{});
             } else {
                 Toast.makeText(context, "There has been a problem", Toast.LENGTH_SHORT).show();
             }

@@ -65,8 +65,10 @@ public class WatchList extends AppCompatActivity implements Initialiser, Adapter
 
             case R.id.wl_recommended_ib:
 
-                Intent takeUserToRecommender = new Intent(WatchList.this, RecommenderPage.class);
-                startActivity(takeUserToRecommender);
+                HashMap<String, String> user = usersession.getUserDetails();
+                String username = user.get(SessionManager.username);
+                String friends = user.get(SessionManager.friends);
+                usersession.checkProfilesExistance(username, friends);
 
                 break;
 
@@ -111,8 +113,9 @@ public class WatchList extends AppCompatActivity implements Initialiser, Adapter
             {
                 textv13.setVisibility(View.VISIBLE);
                 textv13.setText("There are no events for you to watch");
+            } else {
+                watchlist_lv.setAdapter(new WatchListAdapter(this, watchlist));
             }
-            watchlist_lv.setAdapter(new WatchListAdapter(this, watchlist));
 
         } catch (InterruptedException e) {
             e.printStackTrace();

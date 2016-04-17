@@ -19,9 +19,11 @@ import android.widget.Toast;
 import com.example.samsonaiyegbusi.events2you.Initialiser;
 import com.example.samsonaiyegbusi.events2you.R;
 import com.example.samsonaiyegbusi.events2you.REST_calls.GetGenreList;
+import com.example.samsonaiyegbusi.events2you.SessionManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -35,6 +37,7 @@ public class CategoriseEventPage extends AppCompatActivity  implements Initialis
     ArrayList<String> suggestions;
     List<String> tagsList;
     List<String> categoryList;
+    SessionManager session;
 
     Bundle bundle;
 
@@ -114,16 +117,12 @@ public class CategoriseEventPage extends AppCompatActivity  implements Initialis
 
         Intent intent = getIntent();
         bundle = intent.getExtras();
+        session = new SessionManager(this);
+        HashMap<String, String> user = session.getUserDetails();
+        String categories = user.get(SessionManager.category);
 
-        GetGenreList genreList = new GetGenreList(this);
-        try {
-             categoryList = genreList.execute(new String[]{}).get();
-            ;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+
+             categoryList = new ArrayList(Arrays.asList(categories.replace(" ","").split(",")));
 
     }
 

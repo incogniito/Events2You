@@ -27,4 +27,6 @@
     <string name="drawer_close">Close navigation drawer</string>
     <string name="title_activity_event_privacy_page">EventPrivacyPage</string>
     <string name="title_activity_posted_events_page">PostedEventsPage</string>
+    <string name="facebook_app_id">633202853502777</string>
+
 </resources>

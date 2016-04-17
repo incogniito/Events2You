@@ -53,7 +53,10 @@ public class CalendarPage extends AppCompatActivity implements Initialiser {
 
         widgetInitialiser();
         variableInitialiser();
-        initialiseCalendar();
+        if (watchEvents!=null) {
+            initialiseCalendar();
+        }
+
 
     }
 
@@ -70,8 +73,10 @@ public class CalendarPage extends AppCompatActivity implements Initialiser {
 
             case R.id.recommended_ib:
 
-                Intent takeUserToRecommender = new Intent(CalendarPage.this, RecommenderPage.class);
-                startActivity(takeUserToRecommender);
+                HashMap<String, String> user = usersession.getUserDetails();
+                String username = user.get(SessionManager.username);
+                String friends = user.get(SessionManager.friends);
+                usersession.checkProfilesExistance(username, friends);
 
                 break;
 

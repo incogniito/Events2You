@@ -164,6 +164,7 @@ public class ChosenEventInformationFragment extends Fragment implements View.OnC
         watchevent_ib.setOnClickListener(this);
 
         shareTofb = (ImageButton) v.findViewById(R.id.sharTofb);
+        shareTofb.setOnClickListener(this);
     }
 
         @Override

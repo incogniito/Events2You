@@ -4,10 +4,14 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Base64;
+import android.widget.Toast;
 
 import com.example.samsonaiyegbusi.events2you.GettersAndSetters.EventsFactory;
+import com.example.samsonaiyegbusi.events2you.MainUI.Homepage;
+import com.example.samsonaiyegbusi.events2you.SessionManager;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -16,12 +20,13 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by samsonaiyegbusi on 13/03/16.
  */
-public class GetEventsByGenre extends AsyncTask<String, Void, List<EventsFactory>> {
+public class GetEventsByGenre extends AsyncTask<String, Void, String> {
 
     String url = "/events/eventsbygenre?genre=";
     List<EventsFactory> eventsList;
@@ -31,6 +36,7 @@ public class GetEventsByGenre extends AsyncTask<String, Void, List<EventsFactory
 
     ProgressDialog progressDialog;
     Context context;
+    SessionManager session;
 
     public GetEventsByGenre(Context context)
     {
@@ -51,83 +57,22 @@ public class GetEventsByGenre extends AsyncTask<String, Void, List<EventsFactory
         progressDialog.show();    }
 
     @Override
-    protected List<EventsFactory> doInBackground(String... params) {
+    protected String doInBackground(String... params) {
 
-        String genre = params[0];
+        session = new SessionManager(context);
+        HashMap<String, String> category = session.getUserDetails();
+        String genre = category.get(SessionManager.category);
 
         HTTP_Methods http_methods = new HTTP_Methods();
-        String response = http_methods.GET(url + genre);
+        String response = http_methods.GET(url + genre.replace(" ",""));
 
-        return parseXML(response);
+        return response;
 
     }
 
-    public  List<EventsFactory> parseXML(String xml)
-    {
-        XmlPullParserFactory factory;
-        eventsList = new ArrayList();
-
-        try {
-            factory = XmlPullParserFactory.newInstance();
-
-            factory.setNamespaceAware(true);
-            XmlPullParser parser = factory.newPullParser();
-
-            if (xml == null)
-            {
-                return null;
-
-            }
-
-            parser.setInput( new StringReader( xml ) );
-            int eventType = parser.getEventType();
-            while (eventType != XmlPullParser.END_DOCUMENT) {
-                String tag = parser.getName();
-                switch(eventType)
-                {
-                    case XmlPullParser.START_TAG:
-                        if (tag.equalsIgnoreCase("events"))
-                        {
-                            events = new EventsFactory();
-                        }
-                    case XmlPullParser.TEXT:
-
-                        text = parser.getText();
-                        break;
-
-                    case XmlPullParser.END_TAG:
-
-                        if (tag.equalsIgnoreCase("eventID"))
-                        {
-                            events.setEventID(text);
-                        } else if (tag.equalsIgnoreCase("eventImage"))
-                        {
-                            byte[] eventImage = Base64.decode(text, Base64.DEFAULT);
-
-                            events.setEventImage(eventImage);
-                        } else if (tag.equalsIgnoreCase("eventName"))
-                        {
-                            events.setEventName(text);
-                            eventsList.add(events);
-                        } else if (tag.equalsIgnoreCase("stringEventID"))
-                    {
-                        events.setEventID(text);
-                    }
-                        break;
-                }
-                eventType = parser.next();
-            }
-            return eventsList;
-        } catch (XmlPullParserException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     @Override
-    protected void onPostExecute(List<EventsFactory> strings) {
+    protected void onPostExecute(String strings) {
         progressDialog.dismiss();
         if (strings == null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -142,6 +87,14 @@ public class GetEventsByGenre extends AsyncTask<String, Void, List<EventsFactory
             });
             AlertDialog dialog = builder.create();
             dialog.show();
+        } else {
+            session.addMainResponse(strings);
+            HashMap<String, String> user = session.getUserDetails();
+            String username = user.get(SessionManager.username);
+            Toast.makeText(context, "Welcome back " + username, Toast.LENGTH_SHORT).show();
+
+            Intent takeUserToMain = new Intent(context, Homepage.class);
+            context.startActivity(takeUserToMain);
         }
     }
 }

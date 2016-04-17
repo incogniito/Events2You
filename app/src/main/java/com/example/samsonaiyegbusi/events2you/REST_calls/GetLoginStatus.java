@@ -12,6 +12,8 @@ import com.example.samsonaiyegbusi.events2you.MainUI.Homepage;
 import com.example.samsonaiyegbusi.events2you.MainUI.LoginPage;
 import com.example.samsonaiyegbusi.events2you.SessionManager;
 
+import java.util.HashMap;
+
 /**
  * Created by samsonaiyegbusi on 29/03/16.
  */
@@ -67,10 +69,13 @@ public class GetLoginStatus extends AsyncTask<String, Void, String> {
 
             if (s.equalsIgnoreCase("Valid")) {
                 loginSession.createLoginSession(username);
-                Toast.makeText(context, "Welcome back " + username, Toast.LENGTH_SHORT);
-                Intent takeUserToHome = new Intent(context, Homepage.class);
-                takeUserToHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                context.startActivity(takeUserToHome);
+
+                GetGenreList genreList = new GetGenreList(context);
+                genreList.execute(new String[]{});
+
+
+
+
             } else {
                 Toast.makeText(context, "Invalid Username/Password", Toast.LENGTH_SHORT).show();
             }

@@ -28,14 +28,7 @@ public class EventImagesAdapter extends BaseAdapter{
     public EventImagesAdapter(Context context, final String genre){
 
         this.context = context;
-    GetEventsByGenre getEventsByGenre = new GetEventsByGenre(context);
-        try {
-            events = getEventsByGenre.execute(new String[]{genre}).get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+
     }
 
     public EventImagesAdapter(Context context, final String genre, List<EventsFactory> events){

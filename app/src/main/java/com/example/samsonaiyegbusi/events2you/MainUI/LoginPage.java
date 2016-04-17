@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.samsonaiyegbusi.events2you.Initialiser;
 import com.example.samsonaiyegbusi.events2you.R;
 import com.example.samsonaiyegbusi.events2you.REST_calls.GetLoginStatus;
+import com.example.samsonaiyegbusi.events2you.SessionManager;
 
 public class LoginPage extends AppCompatActivity implements Initialiser {
 
@@ -30,6 +31,7 @@ public class LoginPage extends AppCompatActivity implements Initialiser {
 
     TextView signup_tv;
     Animation animateButton;
+    SessionManager session;
 
 
     @Override
@@ -43,6 +45,7 @@ public class LoginPage extends AppCompatActivity implements Initialiser {
 
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
+
 
         getSupportActionBar().hide();
 
@@ -64,7 +67,7 @@ public class LoginPage extends AppCompatActivity implements Initialiser {
 
                 if (username_et.getText().length() == 0 || password_et.getText().length() == 0) {
                     Toast.makeText(LoginPage.this, "Please fill in Username/Password", Toast.LENGTH_SHORT).show();
-break;
+                break;
                 }
                 loginButtonSetup();
                 break;

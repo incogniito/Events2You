@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 
+import com.example.samsonaiyegbusi.events2you.SessionManager;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -16,10 +18,12 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import Parsers.XMLParser;
+
 /**
  * Created by samsonaiyegbusi on 13/03/16.
  */
-public class GetGenreList extends AsyncTask<String, Void, List<String>> {
+public class GetGenreList extends AsyncTask<String, Void, String> {
 
     String url = "/category";
     List<String> genreList;
@@ -29,6 +33,7 @@ public class GetGenreList extends AsyncTask<String, Void, List<String>> {
     ProgressDialog progressDialog;
     Context context;
 
+    SessionManager session;
     public GetGenreList(Context context)
     {
         this.context = context;
@@ -48,67 +53,19 @@ public class GetGenreList extends AsyncTask<String, Void, List<String>> {
         progressDialog.show();    }
 
     @Override
-    protected List<String> doInBackground(String... params) {
+    protected String doInBackground(String... params) {
 
         HTTP_Methods http_methods = new HTTP_Methods();
         String response = http_methods.GET(url);
 
-        return parseXML(response);
+        return response;
 
     }
 
-    public  List<String> parseXML(String xml)
-    {
-        XmlPullParserFactory factory;
-        genreList = new ArrayList();
 
-        try {
-            factory = XmlPullParserFactory.newInstance();
-
-            factory.setNamespaceAware(true);
-            XmlPullParser parser = factory.newPullParser();
-
-            if (xml == null)
-            {
-                return null;
-
-            }
-
-            parser.setInput( new StringReader( xml ) );
-            int eventType = parser.getEventType();
-            while (eventType != XmlPullParser.END_DOCUMENT) {
-                String tag = parser.getName();
-                switch(eventType)
-                {
-                    case XmlPullParser.START_TAG:
-
-                    case XmlPullParser.TEXT:
-
-                        text = parser.getText();
-                        break;
-
-                    case XmlPullParser.END_TAG:
-
-                        if (tag.equalsIgnoreCase("category"))
-                        {
-                            genreList.add(text);
-                        }
-
-                        break;
-                }
-                eventType = parser.next();
-            }
-            return genreList;
-        } catch (XmlPullParserException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     @Override
-    protected void onPostExecute(List<String> strings) {
+    protected void onPostExecute(String strings) {
         progressDialog.dismiss();
         if (strings == null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -123,6 +80,26 @@ public class GetGenreList extends AsyncTask<String, Void, List<String>> {
             });
             AlertDialog dialog = builder.create();
             dialog.show();
+        }else {
+            session = new SessionManager(context);
+
+            XMLParser parseGenre = new XMLParser();
+           List<String> genre = parseGenre.parseXMLforGenre(strings);
+
+            StringBuilder sb = new StringBuilder();
+            for (String str: genre)
+            {
+                sb.append(str);
+                if (str != genre.get(genre.size() - 1))
+                {
+                    sb.append(", ");
+                }
+            }
+
+            session.addcategories(sb.toString());
+
+            GetEventsByGenre getEventsByGenre = new GetEventsByGenre(context);
+            getEventsByGenre.execute(new String[]{});
         }
         }
 }

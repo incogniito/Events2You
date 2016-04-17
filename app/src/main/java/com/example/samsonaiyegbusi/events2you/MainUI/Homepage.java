@@ -25,6 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.samsonaiyegbusi.events2you.Adapters.PagerAdapter;
+import com.example.samsonaiyegbusi.events2you.Adapters.RecommenderPagerAdapter;
+import com.example.samsonaiyegbusi.events2you.GettersAndSetters.EventsFactory;
 import com.example.samsonaiyegbusi.events2you.Initialiser;
 import com.example.samsonaiyegbusi.events2you.R;
 import com.example.samsonaiyegbusi.events2you.REST_calls.GetFriends;
@@ -38,6 +40,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+
+import Parsers.XMLParser;
 
 public class Homepage extends AppCompatActivity implements Initialiser, AdapterView.OnItemClickListener {
 
@@ -72,7 +76,11 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
         variableInitialiser();
         widgetInitialiser();
         addDrawerItems();
-        initialisePaging();
+        HashMap<String, String> user = mainSession.getUserDetails();
+        String response = user.get(SessionManager.mainResponse);
+        if (response!=null) {
+            initialisePaging();
+        }
 
     }
 
@@ -203,16 +211,15 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
     }
 
     private void initialisePaging() {
-        GetGenreList genreList = new GetGenreList(this);
 
-        try {
-            genre = genreList.execute(new String[]{}).get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        final PagerAdapter pgrAdapter = new PagerAdapter(getSupportFragmentManager(), genre);
+       HashMap<String, String> user = mainSession.getUserDetails();
+       String response = user.get(SessionManager.mainResponse);
+        String categories = user.get(SessionManager.category);
+        genre = new ArrayList(Arrays.asList(categories.replace(" ","").split(",")));
+        XMLParser parser = new XMLParser();
+        List<EventsFactory> events = parser.parseXMLforList(response, this);
+
+        final PagerAdapter pgrAdapter = new PagerAdapter(getSupportFragmentManager(), genre, events);
         viewPager.setAdapter(pgrAdapter);
     }
 
