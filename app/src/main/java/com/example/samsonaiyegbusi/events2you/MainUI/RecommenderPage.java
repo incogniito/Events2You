@@ -30,6 +30,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import Parsers.XMLParser;
+
 public class RecommenderPage extends AppCompatActivity implements Initialiser{
 
     ImageButton calendar_ib;
@@ -43,6 +45,7 @@ public class RecommenderPage extends AppCompatActivity implements Initialiser{
     SessionManager session;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +53,7 @@ public class RecommenderPage extends AppCompatActivity implements Initialiser{
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        variableInitialiser();
         widgetInitialiser();
         initialisePaging();
 
@@ -85,7 +89,7 @@ public class RecommenderPage extends AppCompatActivity implements Initialiser{
     @Override
     public void variableInitialiser() {
 
-
+session = new SessionManager(this);
 
     }
 
@@ -109,44 +113,12 @@ public class RecommenderPage extends AppCompatActivity implements Initialiser{
     }
 
     private void initialisePaging() {
-        GetRecommendedEvents recommendedEvents = new GetRecommendedEvents(this);
 
-        List<EventsFactory>  recommended = null;
+        HashMap<String, String> response = session.getUserDetails();
+      String allEvents =  response.get(SessionManager.response);
 
-        session = new SessionManager(this);
-        HashMap<String, String> userprofile = session.getUserDetails();
-        String profiles = userprofile.get(SessionManager.profiles);
-
-        try {
-              recommended = recommendedEvents.execute(new String[]{ profiles}).get();
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        if (session.hasrecommenderFriends()){
-            String filteredFriends = userprofile.get(SessionManager.recommenderfriends);
-            String username = userprofile.get(SessionManager.username);
-            List<String> friendsList = new ArrayList(Arrays.asList(filteredFriends.split(",")));
-
-        for (String friend : friendsList) {
-                GetRecommendedEventsOnFriends recommendedEventsOnFriends = new GetRecommendedEventsOnFriends(this);
-
-                try {
-                    List<EventsFactory> eventsOnFriends = recommendedEventsOnFriends.execute(new String[]{username, friend, profiles }).get();
-
-                    if (eventsOnFriends != null) {
-                        recommended.addAll(eventsOnFriends);
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        XMLParser parseEvents = new XMLParser();
+        List<EventsFactory>  recommended = parseEvents.parseXMLforList(allEvents, this);
 
         for (EventsFactory events: recommended ){
             if (!genre.contains(events.getEventGenre()))
@@ -156,6 +128,7 @@ public class RecommenderPage extends AppCompatActivity implements Initialiser{
         if (recommended != null) {
             final RecommenderPagerAdapter pgrAdapter = new RecommenderPagerAdapter(getSupportFragmentManager(), genre, recommended);
             viewPager.setAdapter(pgrAdapter);
+            session.addResponse("");
         }
     }
 }

@@ -4,14 +4,10 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.util.Base64;
 
 import com.example.samsonaiyegbusi.events2you.GettersAndSetters.EventsFactory;
-import com.example.samsonaiyegbusi.events2you.MainUI.RecommenderPage;
-import com.example.samsonaiyegbusi.events2you.SessionManager;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -19,30 +15,30 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by samsonaiyegbusi on 13/03/16.
  */
-public class GetRecommendedEvents extends AsyncTask<String, Void, String> {
+public class GetPostedEventsCount extends AsyncTask<String, Void, String> {
 
+    String url = "/watchedevents/count?eventid=";
+    List<EventsFactory> eventsList;
+    EventsFactory events;
 
-
-    String url = "/events/recommendonuserprofiles?";
+    String text;
 
     ProgressDialog progressDialog;
     Context context;
-    SessionManager session;
-    String profiles;
-    HashMap<String, String> userprofile;
-    int functionID ;
 
-    public GetRecommendedEvents(Context context, int functionID)
+    public GetPostedEventsCount(Context context)
     {
         this.context = context;
-        this.functionID = functionID;
     }
 
     @Override
@@ -56,23 +52,18 @@ public class GetRecommendedEvents extends AsyncTask<String, Void, String> {
                 dialog.dismiss();
             }
         });
-        progressDialog.show();    }
+//        progressDialog.show();
+    }
 
     @Override
     protected String doInBackground(String... params) {
 
-        session = new SessionManager(context);
-         userprofile = session.getUserDetails();
-        profiles = userprofile.get(SessionManager.profiles);
-
-
-        String parameters = "userprofiles="+profiles.replaceAll(" ","");
+        String eventid = params[0];
 
         HTTP_Methods http_methods = new HTTP_Methods();
-        String response = http_methods.GET(url + parameters);
+        String response = http_methods.GET(url + eventid);
 
-
-        return response;
+        return response.replace("\n", "");
 
     }
 
@@ -94,21 +85,6 @@ public class GetRecommendedEvents extends AsyncTask<String, Void, String> {
             });
             AlertDialog dialog = builder.create();
             dialog.show();
-        } else {
-            if (functionID == 0) {
-                Intent recommendEvents = new Intent(context, RecommenderPage.class);
-                session.addResponse(strings);
-                context.startActivity(recommendEvents);
-            } else {
-                if (session.hasrecommenderFriends()) {
-                    String filteredFriends = userprofile.get(SessionManager.recommenderfriends);
-                    String username = userprofile.get(SessionManager.username);
-                    GetRecommendedEventsOnFriends recommendedEventsOnFriends = new GetRecommendedEventsOnFriends(context, strings);
-                    recommendedEventsOnFriends.execute(new String[]{username, filteredFriends, profiles});
-                }
-
-
-            }
         }
-    }
+        }
 }

@@ -72,7 +72,7 @@ public class AddFriendsPage extends AppCompatActivity implements Initialiser{
                 String friend_username = searchFriends.getText().toString();
                 if (!userList.contains(friend_username)) {
                     Toast.makeText(this, "User does not exist", Toast.LENGTH_LONG).show();
-                    ;
+
                     break;
                 } else if (friends.contains(friend_username)) {
                     Toast.makeText(this, "You are already friends with this user", Toast.LENGTH_LONG).show();

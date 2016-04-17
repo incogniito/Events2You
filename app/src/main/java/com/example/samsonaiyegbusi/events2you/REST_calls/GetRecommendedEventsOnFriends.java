@@ -4,10 +4,13 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Base64;
 
 import com.example.samsonaiyegbusi.events2you.GettersAndSetters.EventsFactory;
+import com.example.samsonaiyegbusi.events2you.MainUI.RecommenderPage;
 import com.example.samsonaiyegbusi.events2you.SessionManager;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -22,7 +25,7 @@ import java.util.List;
 /**
  * Created by samsonaiyegbusi on 13/03/16.
  */
-public class GetRecommendedEventsOnFriends extends AsyncTask<String, Void, List<EventsFactory>> {
+public class GetRecommendedEventsOnFriends extends AsyncTask<String, Void, String> {
 
     String url = "/watchedevents/recommendonfriends?";
     List<EventsFactory> eventsList;
@@ -32,11 +35,13 @@ public class GetRecommendedEventsOnFriends extends AsyncTask<String, Void, List<
 
     ProgressDialog progressDialog;
     Context context;
+    String recommended;
     SessionManager session;
 
-    public GetRecommendedEventsOnFriends(Context context)
+    public GetRecommendedEventsOnFriends(Context context, String recommended)
     {
         this.context = context;
+        this.recommended = recommended;
     }
 
     @Override
@@ -53,7 +58,7 @@ public class GetRecommendedEventsOnFriends extends AsyncTask<String, Void, List<
         progressDialog.show();    }
 
     @Override
-    protected List<EventsFactory> doInBackground(String... params) {
+    protected String doInBackground(String... params) {
         String username = params[0];
         String friend = params[1];
         String profiles = params[2];
@@ -63,79 +68,13 @@ public class GetRecommendedEventsOnFriends extends AsyncTask<String, Void, List<
         HTTP_Methods http_methods = new HTTP_Methods();
         String response = http_methods.GET(url + parameters);
 
-        return parseXML(response);
+        return response;
     }
 
-    public  List<EventsFactory> parseXML(String xml)
-    {
-        XmlPullParserFactory factory;
-        eventsList = new ArrayList();
 
-        try {
-            factory = XmlPullParserFactory.newInstance();
-
-            factory.setNamespaceAware(true);
-            XmlPullParser parser = factory.newPullParser();
-
-            if (xml == null)
-            {
-                return null;
-
-            }
-
-            parser.setInput( new StringReader( xml ) );
-            int eventType = parser.getEventType();
-            while (eventType != XmlPullParser.END_DOCUMENT) {
-                String tag = parser.getName();
-                switch(eventType)
-                {
-                    case XmlPullParser.START_TAG:
-                        if (tag.equalsIgnoreCase("events"))
-                        {
-                            events = new EventsFactory();
-                        }
-                    case XmlPullParser.TEXT:
-
-                        text = parser.getText();
-                        break;
-
-                    case XmlPullParser.END_TAG:
-
-                        if (tag.equalsIgnoreCase("eventID"))
-                        {
-                            events.setEventID(text);
-                        } else if (tag.equalsIgnoreCase("eventImage"))
-                        {
-                            byte[] eventImage = Base64.decode(text, Base64.DEFAULT);
-
-                            events.setEventImage(eventImage);
-                        } else if (tag.equalsIgnoreCase("eventName"))
-                        {
-                            events.setEventName(text);
-                            eventsList.add(events);
-                        } else if (tag.equalsIgnoreCase("stringEventID"))
-                        {
-                            events.setEventID(text);
-                        }else if (tag.equalsIgnoreCase("category"))
-                        {
-                            events.setEventGenre(
-                                    text);
-                        }
-                        break;
-                }
-                eventType = parser.next();
-            }
-            return eventsList;
-        } catch (XmlPullParserException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     @Override
-    protected void onPostExecute(List<EventsFactory> strings) {
+    protected void onPostExecute(String strings) {
         progressDialog.dismiss();
         if (strings == null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -150,6 +89,14 @@ public class GetRecommendedEventsOnFriends extends AsyncTask<String, Void, List<
             });
             AlertDialog dialog = builder.create();
             dialog.show();
+        }else{
+
+            Bundle bundle = new Bundle();
+            bundle.putString("recommendedEvents", strings + recommended);
+            Intent recommendEvents = new Intent (context, RecommenderPage.class);
+            recommendEvents.putExtras(bundle);
+            context.startActivity(recommendEvents);
+
         }
     }
 }

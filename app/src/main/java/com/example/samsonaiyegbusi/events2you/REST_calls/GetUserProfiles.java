@@ -72,8 +72,8 @@ public class GetUserProfiles extends AsyncTask<String, Void, String> {
 
                 session = new SessionManager(context);
                 session.addProfiles(strings);
-                Intent takeUserToRecommender = new Intent(context, RecommenderPage.class);
-                context.startActivity(takeUserToRecommender);
+                GetRecommendedEvents recommendEvents = new GetRecommendedEvents(context,0);
+                recommendEvents.execute(new String[]{});
 
             }else {
                 Intent addInterests = new Intent(context, ChooseInterestPage.class);

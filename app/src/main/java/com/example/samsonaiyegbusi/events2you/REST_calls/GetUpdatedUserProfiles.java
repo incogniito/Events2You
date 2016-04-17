@@ -51,7 +51,7 @@ public class GetUpdatedUserProfiles extends AsyncTask<String, Void, String> {
         HTTP_Methods http_methods = new HTTP_Methods();
         String response = http_methods.GET(url + username);
 
-        return response.replace("\n", "");
+       return response.replace("\n", "");
 
     }
 
@@ -68,6 +68,8 @@ public class GetUpdatedUserProfiles extends AsyncTask<String, Void, String> {
 
 
         }else {
+
+
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setMessage("Our servers are down at the moment, we deeply apologise for this inconvenience");
             builder.setTitle("Sorry");
@@ -76,6 +78,7 @@ public class GetUpdatedUserProfiles extends AsyncTask<String, Void, String> {
                 public void onClick(DialogInterface dialogInterface, int i) {
                     //close tag
                     dialogInterface.dismiss();
+                    session.logoutUser();
                 }
             });
             AlertDialog dialog = builder.create();

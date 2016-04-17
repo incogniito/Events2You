@@ -13,6 +13,7 @@ import com.example.samsonaiyegbusi.events2you.MainUI.ChooseInterestPage;
 import com.example.samsonaiyegbusi.events2you.MainUI.FilterFriendsPage;
 import com.example.samsonaiyegbusi.events2you.MainUI.LoginPage;
 import com.example.samsonaiyegbusi.events2you.MainUI.RecommenderPage;
+import com.example.samsonaiyegbusi.events2you.REST_calls.GetRecommendedEvents;
 import com.example.samsonaiyegbusi.events2you.REST_calls.GetRecommendedEventsOnFriends;
 import com.example.samsonaiyegbusi.events2you.REST_calls.GetUpdatedUserProfiles;
 import com.example.samsonaiyegbusi.events2you.REST_calls.GetUserProfiles;
@@ -46,6 +47,7 @@ public class SessionManager  {
     public static final String friendsAdded = "friendsAdded";
     public static final String recommenderfriends = "recommenderfriends";
     public static final String recommenderfriendsAdded = "recommenderfriendsAdded";
+    public static final String response = "response";
     private HashMap<String, String> user = new HashMap<String, String>();
 
     private int funtionCounter = 0;
@@ -73,6 +75,13 @@ public class SessionManager  {
 
         editor.commit();
     }
+    public void addResponse(String response_){
+
+        editor.putString(response, response_);
+
+        editor.commit();
+    }
+
 
     public void addrecommenderfriends(String userProfiles){
         editor.putBoolean(recommenderfriendsAdded, true);
@@ -92,12 +101,15 @@ public class SessionManager  {
         editor.commit();
     }
 
+
+
     public HashMap<String, String> getUserDetails(){
 
         user.put(username, pref.getString(username, null));
         user.put(profiles, pref.getString(profiles, null));
         user.put(friends, pref.getString(friends, null));
         user.put(recommenderfriends, pref.getString(recommenderfriends, null));
+        user.put(response, pref.getString(response, null));
 
         return user;
     }
@@ -125,8 +137,8 @@ public class SessionManager  {
             userProfiles.execute(new String[]{pref.getString(username, name)});
         }else{
             if(!hasFriends()) {
-                Intent takeUserToRecommender = new Intent(context, RecommenderPage.class);
-                context.startActivity(takeUserToRecommender);
+                GetRecommendedEvents recommendEvents = new GetRecommendedEvents(context,0);
+                recommendEvents.execute(new String[]{});
             } else {
                 if (!hasrecommenderFriends())
                 {
@@ -139,8 +151,8 @@ public class SessionManager  {
                     takeUserToChooseFriends.putExtras(bundle);
                     context.startActivity(takeUserToChooseFriends);
                 } else{
-                    Intent takeUserToRecommender = new Intent(context, RecommenderPage.class);
-                    context.startActivity(takeUserToRecommender);
+                    GetRecommendedEvents recommendEvents = new GetRecommendedEvents(context,1);
+                    recommendEvents.execute(new String[]{});
                 }
             }
         }

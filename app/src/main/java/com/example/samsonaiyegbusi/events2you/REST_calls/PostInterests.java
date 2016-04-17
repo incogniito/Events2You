@@ -59,11 +59,6 @@ public class PostInterests extends AsyncTask<String, Void, String> {
         String parameters = ("interests="+interests+"&username="+username);
 
         String response = http_methods.PUT(url, parameters);
-
-
-
-
-
         return response.replace("\n", "");
     }
 
@@ -72,6 +67,7 @@ public class PostInterests extends AsyncTask<String, Void, String> {
         progressDialog.dismiss();
         if (s != null) {
 
+            Toast.makeText(context, "Your interests have been saved", Toast.LENGTH_SHORT).show();
             session = new SessionManager(context);
             session.addProfiles(s);
             HashMap<String, String> user = session.getUserDetails();

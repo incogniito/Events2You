@@ -1,6 +1,9 @@
 package com.example.samsonaiyegbusi.events2you.Fragments;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.method.ScrollingMovementMethod;
@@ -18,8 +21,18 @@ import com.example.samsonaiyegbusi.events2you.R;
 import com.example.samsonaiyegbusi.events2you.REST_calls.GetEventsByID;
 import com.example.samsonaiyegbusi.events2you.REST_calls.PostWatchedEvents;
 import com.example.samsonaiyegbusi.events2you.SessionManager;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.share.ShareApi;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -34,6 +47,9 @@ public class ChosenEventInformationFragment extends Fragment implements View.OnC
         public String event_ID;
         public byte[] imageBytes;
 
+    private CallbackManager callbackManager;
+    private LoginManager loginManager;
+
     String startTime;
     String finishTime;
     String date;
@@ -46,6 +62,7 @@ public class ChosenEventInformationFragment extends Fragment implements View.OnC
 
     EditText Username;
     TextView tags;
+    ImageButton shareTofb;
 
 
    static SessionManager userSession;
@@ -74,6 +91,9 @@ public class ChosenEventInformationFragment extends Fragment implements View.OnC
         @Override
         public void onCreate(Bundle savedInstanceState){
             super.onCreate(savedInstanceState);
+            FacebookSdk.sdkInitialize(c);
+
+            callbackManager = CallbackManager.Factory.create();
             page = getArguments().getInt(ARG_PAGE);
             this.setRetainInstance(true);
         }
@@ -142,6 +162,8 @@ public class ChosenEventInformationFragment extends Fragment implements View.OnC
 
         watchevent_ib = (ImageButton) v.findViewById(R.id.watchevent_ib);
         watchevent_ib.setOnClickListener(this);
+
+        shareTofb = (ImageButton) v.findViewById(R.id.sharTofb);
     }
 
         @Override
@@ -151,26 +173,83 @@ public class ChosenEventInformationFragment extends Fragment implements View.OnC
 
     @Override
     public void onClick(View v) {
+switch (v.getId()) {
+    case R.id.watchevent_ib:
+    HashMap<String, String> user = userSession.getUserDetails();
 
-        HashMap<String, String> user = userSession.getUserDetails();
+    String username = user.get(SessionManager.username);
+    String eventName = EventName.getText().toString();
+    String eventDate = date;
+    String eventStartTime = startTime;
+    String eventFinishTime = finishTime;
+    String eventAddress = EventAddress.getText().toString();
+    String eventDescription = EventDescription.getText().toString();
+    String eventImage = Base64.encodeToString(imageBytes, Base64.NO_WRAP + Base64.URL_SAFE);
+    String eventID = event_ID;
+    String eventOwner = Username.getText().toString();
+    String eventTags = tags.getText().toString();
 
-        String username = user.get(SessionManager.username);
-        String eventName = EventName.getText().toString();
-        String eventDate = date;
-        String eventStartTime = startTime;
-        String eventFinishTime = finishTime;
-        String eventAddress =  EventAddress.getText().toString();
-        String eventDescription =  EventDescription.getText().toString();
-        String eventImage = Base64.encodeToString(imageBytes, Base64.NO_WRAP + Base64.URL_SAFE);
-        String eventID = event_ID;
-        String eventOwner = Username.getText().toString();
-        String eventTags = tags.getText().toString();
+    PostWatchedEvents watchEvent = new PostWatchedEvents(c);
+    watchEvent.execute(new String[]{eventName, eventDate, eventStartTime, eventFinishTime, eventAddress, eventDescription, eventImage, username, eventID, eventOwner, eventTags});
+break;
 
-        PostWatchedEvents watchEvent = new PostWatchedEvents(c);
-        watchEvent.execute(new String[]{eventName, eventDate, eventStartTime, eventFinishTime, eventAddress, eventDescription, eventImage, username, eventID, eventOwner, eventTags});
+    case R.id.sharTofb:
+        facebookSetup();
+        break;
+
+}
+
+    }
+
+    private void facebookSetup()
+    {
+
+        final List<String> permissions = new ArrayList<String>() {{
+            add("publish_actions");
+        }};
+        //this loginManager helps you eliminate adding a LoginButton to your UI
+        loginManager = LoginManager.getInstance();
+
+        loginManager.logInWithPublishPermissions(this, permissions);
+
+        loginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>()
+        {
+            @Override
+            public void onSuccess(LoginResult loginResult)
+            {
+                sharePhotoToFacebook();
+            }
+
+            @Override
+            public void onCancel()
+            {
+                System.out.println("onCancel");
+            }
+
+            @Override
+            public void onError(FacebookException exception)
+            {
+                System.out.println("onError");
+            }
+        });
+    }
+    private void sharePhotoToFacebook(){
+
+        Bitmap eventImage = BitmapFactory.decodeByteArray(imageBytes , 0, imageBytes.length);
+
+        String caption = "Come and check out this event: " + EventName.getText().toString();
 
 
+        SharePhoto photo = new SharePhoto.Builder()
+                .setBitmap(eventImage)
+                .setCaption(caption)
+                .build();
 
+        SharePhotoContent content = new SharePhotoContent.Builder()
+                .addPhoto(photo)
+                .build();
+
+        ShareApi.share(content, null);
 
     }
 

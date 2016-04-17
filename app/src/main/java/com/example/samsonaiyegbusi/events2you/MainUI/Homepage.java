@@ -43,14 +43,13 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
 
     SessionManager mainSession;
 
-    String[] menu = {"Add Event","Friends","Change Interests", "Logout"};
+    String[] menu = {"Add Event","Posted Events","Friends","Change Interests", "Invitations","Logout"};
     private ListView menuDrawerList;
     private ArrayAdapter<String> menuAdapter;
 
     Bundle bundle;
 
     ImageButton calendar_ib;
-    ImageButton events_ib;
     ImageButton watch_list_ib;
     ImageButton search_ib;
     ImageButton recommender_ib;
@@ -179,11 +178,7 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (menu[position].equalsIgnoreCase("Add Event")){
-
-            Intent addEventProcess = new Intent(Homepage.this, AddEventPage.class);
-            addEventProcess.putExtras(bundle);
-            startActivity(addEventProcess);
-
+            eventItem();
         } else if (menu[position].equalsIgnoreCase("Logout"))
         {
             mainSession.logoutUser();
@@ -193,6 +188,10 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
         } else if (menu[position].equalsIgnoreCase("Change Interests"))
         {
             Intent addEventProcess = new Intent(Homepage.this, ChooseInterestPage.class);
+            startActivity(addEventProcess);
+        }else if (menu[position].equalsIgnoreCase("Posted Events"))
+        {
+            Intent addEventProcess = new Intent(Homepage.this, PostedEventsPage.class);
             startActivity(addEventProcess);
         }
     }
@@ -224,7 +223,7 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
         final CharSequence[] items = {"Manage Friends", "Filter Friends"};
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Event options");
+        builder.setTitle("Friend options");
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -267,4 +266,54 @@ public class Homepage extends AppCompatActivity implements Initialiser, AdapterV
         });
 builder.show();
     }
+
+    public void eventItem()
+    {
+
+        final CharSequence[] items = {"Public Event", "Private Event"};
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Event options");
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //close tag
+                dialogInterface.dismiss();
+            }
+        });
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (items[item].toString().equalsIgnoreCase("Public Event"))
+                {
+                    Intent addEventProcess = new Intent(Homepage.this, AddEventPage.class);
+                    addEventProcess.putExtras(bundle);
+                    startActivity(addEventProcess);
+                } else if(items[item].toString().equalsIgnoreCase("Private Event"))
+                {
+                    if (mainSession.hasFriends() == false)
+                    {
+                        Toast.makeText(Homepage.this, "You have no friends to invite", Toast.LENGTH_SHORT).show();
+                    }else {
+
+                        HashMap<String, String> user = mainSession.getUserDetails();
+                        String friends = user.get(SessionManager.friends);
+
+                        ArrayList<String> friendsList = new ArrayList(Arrays.asList(friends.split(",")));
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean("friendsRecommender", false);
+                        bundle.putStringArrayList("friends",friendsList);
+                        bundle.putBoolean("fromHome", true);
+                        Intent takeUserToChooseFriends = new Intent(Homepage.this, EventPrivacyPage.class);
+                        takeUserToChooseFriends.putExtras(bundle);
+                        startActivity(takeUserToChooseFriends);
+                    }
+                }
+
+            }
+        });
+        builder.show();
+    }
+
+
 }

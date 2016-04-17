@@ -19,7 +19,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class HTTP_Methods {
 
-    String ip = "http://172.21.5.137:8080/Events2You_API/API";
+    String ip = "http://172.21.5.121:8080/Events2You_API/API";
 
     public String GET(String desiredUrl) {
         try {
@@ -29,7 +29,9 @@ public class HTTP_Methods {
             HttpURLConnection connect2Rest = (HttpURLConnection) url.openConnection();
 
 
-            int responseCode = connect2Rest.getResponseCode();
+            if (connect2Rest.getResponseCode() != 200) {
+                throw new IOException(connect2Rest.getResponseMessage());
+            }
 
             BufferedReader is = new BufferedReader(new InputStreamReader(connect2Rest.getInputStream()));
             String inString;
@@ -39,7 +41,6 @@ public class HTTP_Methods {
             }
 
             String xml = sb.toString();
-            System.out.print(responseCode);
 
             return xml;
 
