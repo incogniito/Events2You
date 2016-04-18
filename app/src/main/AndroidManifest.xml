@@ -31,7 +31,8 @@
         <activity
             android:name=".MainUI.Homepage"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,19 +42,27 @@
         <activity
             android:name=".MainUI.LoginPage"
             android:label="@string/title_activity_login_page"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".MainUI.SignupPage"
             android:label="@string/title_activity_signup_page"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".MainUI.AddEventPage"
             android:label="@string/title_activity_add_event_page"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".MainUI.FindAddressPage"
             android:label="@string/title_activity_find_address_page"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -69,59 +78,87 @@
         <activity
             android:name=".MainUI.EventDescriptionPage"
             android:label="@string/title_activity_event_description_page"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".MainUI.PreviewPage"
             android:label="@string/title_activity_preview_page"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".MainUI.ChosenEventPage"
             android:label="@string/title_activity_chosen_event_page"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".MainUI.WatchList"
             android:label="@string/title_activity_watch_list"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".MainUI.RecommenderPage"
             android:label="@string/title_activity_recommender_page"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".MainUI.ChooseInterestPage"
             android:label="@string/title_activity_choose_interest_page"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".MainUI.AddFriendsPage"
             android:label="@string/title_activity_add_friends_page"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".MainUI.CategoriseEventPage"
             android:label="@string/title_activity_categorise_event_page"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".MainUI.FilterFriendsPage"
             android:label="@string/title_activity_filter_friends_page"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".MainUI.SearchPage"
             android:label="@string/title_activity_search_page"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".MainUI.CalendarPage"
             android:label="@string/title_activity_calendar_page"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".MainUI.Calendaar"
             android:label="@string/title_activity_calendaar"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".MainUI.EventPrivacyPage"
             android:label="@string/title_activity_event_privacy_page"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".MainUI.PostedEventsPage"
             android:label="@string/title_activity_posted_events_page"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            ></activity>
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"

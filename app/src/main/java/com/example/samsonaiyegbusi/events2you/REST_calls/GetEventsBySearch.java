@@ -32,23 +32,15 @@ public class GetEventsBySearch extends AsyncTask<String, Void, List<EventsFactor
     ProgressDialog progressDialog;
     Context context;
 
-    public GetEventsBySearch(Context context)
+    public GetEventsBySearch(Context context, ProgressDialog pd)
     {
         this.context = context;
+        progressDialog = pd;
     }
 
     @Override
     protected void onPreExecute() {
-        progressDialog = new ProgressDialog(context);
-        progressDialog.setTitle("Retrieving events");
-        progressDialog.setMessage("Please Wait...");
-        progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
             }
-        });
-        progressDialog.show();    }
 
     @Override
     protected List<EventsFactory> doInBackground(String... params) {
@@ -146,7 +138,7 @@ public class GetEventsBySearch extends AsyncTask<String, Void, List<EventsFactor
             });
             AlertDialog dialog = builder.create();
             dialog.show();
-        }else {
+        }else if (strings.isEmpty()){
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setMessage("No results found");
             builder.setTitle("Sorry");

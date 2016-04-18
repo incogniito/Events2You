@@ -1,5 +1,7 @@
 package com.example.samsonaiyegbusi.events2you.MainUI;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -82,7 +84,18 @@ Bundle bundle;
                 String location_ = search_location.getText().toString();
                 String range_ = range.getText().toString();
 
-                GetEventsBySearch getSearchResult = new GetEventsBySearch(this);
+            ProgressDialog progressDialog = new ProgressDialog(this);
+                progressDialog.setTitle("Searching");
+                progressDialog.setMessage("Please Wait...");
+                progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                progressDialog.show();
+
+                GetEventsBySearch getSearchResult = new GetEventsBySearch(this, progressDialog);
                 List<EventsFactory> searchResults = null;
                 try {
                     searchResults = getSearchResult.execute(new String[]{phrase, location_, range_}).get();
