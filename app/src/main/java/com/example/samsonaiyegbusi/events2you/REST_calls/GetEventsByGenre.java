@@ -28,6 +28,8 @@ import java.util.List;
  */
 public class GetEventsByGenre extends AsyncTask<String, Void, String> {
 
+
+
     String url = "/events/eventsbygenre?genre=";
     List<EventsFactory> eventsList;
     EventsFactory events;

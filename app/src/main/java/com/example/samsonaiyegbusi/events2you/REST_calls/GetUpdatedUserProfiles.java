@@ -32,7 +32,7 @@ public class GetUpdatedUserProfiles extends AsyncTask<String, Void, String> {
     @Override
     protected void onPreExecute() {
         progressDialog = new ProgressDialog(context);
-        progressDialog.setTitle("Retrieving Suggestions");
+        progressDialog.setTitle("Retrieving User Profiles");
         progressDialog.setMessage("Please Wait...");
         progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
             @Override

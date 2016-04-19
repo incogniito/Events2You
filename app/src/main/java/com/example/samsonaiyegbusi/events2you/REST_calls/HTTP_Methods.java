@@ -19,7 +19,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class HTTP_Methods {
 
-    String ip = "http://172.21.5.202:8080/Events2You_API/API";
+    String ip = "http://172.21.5.211:8080/Events2You_API/API";
 
     public String GET(String desiredUrl) {
         try {
